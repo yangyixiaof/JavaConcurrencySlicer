@@ -14,13 +14,19 @@ public class TestCase1 {
         Thread t1 = new Thread(new Runnable() {
             @Override
             public void run() {
-                stack0.isEmpty();
+                try {
+                    stack0.isEmpty();
+                } catch (Exception e) {
+                }
             }
         });
         Thread t2 = new Thread(new Runnable() {
             @Override
             public void run() {
-                stack0.pop();
+                try {
+                    stack0.pop();
+                } catch (Exception e) {
+                }
             }
         });
         t1.start();

@@ -81,8 +81,15 @@ public class DepenencyVisitor extends BaseVisitor {
 			test_code.add(tab + "public void run() {\n");
 			
 			tab += SlicedCodeGenerator.ONE_LINETAB;
+			test_code.add(tab + "try {\n");
+			
+			tab += SlicedCodeGenerator.ONE_LINETAB;
 			SlicedCodeGenerator.AppendStatements(test_code, depd_clone.OrderedStatements(statements_order), tab);
 			SlicedCodeGenerator.AppendOneStatement(test_code, stat, tab);
+			tab = tab.substring(SlicedCodeGenerator.ONE_LINETAB.length());
+			
+			test_code.add(tab + "} catch (Exception e) {\n");
+			test_code.add(tab + "}\n");
 			tab = tab.substring(SlicedCodeGenerator.ONE_LINETAB.length());
 			
 			test_code.add(tab + "}\n");
