@@ -1,0 +1,183 @@
+package cn.yyx.research.slice_visitor;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.IBinding;
+import org.eclipse.jdt.core.dom.SimpleName;
+import org.eclipse.jdt.core.dom.Statement;
+import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
+import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
+
+import cn.yyx.research.slice_visitor.util.SlicedCodeGenerator;
+import cn.yyx.research.slice_visitor.util.Dependency;
+
+public class DepenencyVisitor extends BaseVisitor {
+	
+	int order = 0;
+	int concerned = 0;
+	final List<Statement> concerned_statements;
+	Map<Statement, Integer> statements_order = new HashMap<Statement, Integer>();
+	Map<Statement, Dependency> concerned_dependencies = new HashMap<Statement, Dependency>();
+	Map<IBinding, Dependency> ibindings_dependencies = new HashMap<IBinding, Dependency>();
+	
+	boolean signal = false;
+	Statement cared_statement = null;
+	
+	public DepenencyVisitor(List<Statement> lastnms, String classname) {
+		super(classname);
+		concerned_statements = lastnms;
+		
+		// debugging.
+		System.err.println("test:" + concerned_statements);
+	}
+	
+	public List<String> GenerateParallelTestCases()
+	{
+		List<String> test_code = new LinkedList<String>();
+		ArrayList<Statement> statement_array = new ArrayList<Statement>();
+		ArrayList<Dependency> dependency_array = new ArrayList<Dependency>();
+		
+		Dependency commondep = null;
+		
+		Set<Statement> keys = concerned_dependencies.keySet();
+		Iterator<Statement> kitr = keys.iterator();
+		while (kitr.hasNext())
+		{
+			Statement stat = kitr.next();
+			Dependency deped = concerned_dependencies.get(stat);
+			
+			if (commondep == null) {
+				commondep = new Dependency(deped);
+			} else {
+				commondep.Intersection(deped);
+			}
+			
+			statement_array.add(stat);
+			dependency_array.add(deped);
+		}
+		
+		List<Statement> common_statements = commondep.OrderedStatements(statements_order);
+		SlicedCodeGenerator.AppendStatements(test_code, common_statements, "");
+		
+		int threadcount = 0;
+		for (int i=0;i<statement_array.size();i++)
+		{
+			threadcount++;
+			Statement stat = statement_array.get(i);
+			Dependency depd = dependency_array.get(i);
+			Dependency depd_clone = new Dependency(depd);
+			depd_clone.Subtraction(commondep);
+			
+			String tab = SlicedCodeGenerator.ONE_LINETAB;
+			test_code.add("Thread t" + threadcount + " = new Thread(new Runnable() {\n");
+			test_code.add(tab + "@Override\n");
+			test_code.add(tab + "public void run() {\n");
+			
+			tab += SlicedCodeGenerator.ONE_LINETAB;
+			SlicedCodeGenerator.AppendStatements(test_code, depd_clone.OrderedStatements(statements_order), tab);
+			SlicedCodeGenerator.AppendOneStatement(test_code, stat, tab);
+			tab = tab.substring(SlicedCodeGenerator.ONE_LINETAB.length());
+			
+			test_code.add(tab + "}\n");
+			test_code.add("});\n");
+		}
+		for (int i=0;i<threadcount;i++)
+		{
+			test_code.add("t" + (i+1) + ".start();\n");
+		}
+		for (int i=0;i<threadcount;i++)
+		{
+			test_code.add("t" + (i+1) + ".join();\n");
+		}
+		return test_code;
+	}
+	
+	@Override
+	public boolean visit(SimpleName node) {
+		IBinding ib = node.resolveBinding();
+		if (ib != null) {
+			Dependency depd = ibindings_dependencies.get(ib);
+			if (depd == null) {
+				System.err.println("Warning no binding:" + node + "; must check it is not a variable.");
+			} else {
+				if (signal) {
+					Dependency dd = concerned_dependencies.get(cared_statement);
+					dd.Union(depd);
+				} else {
+					depd.AddStatement(FindMostCloseAncestorStatement(node));
+				}
+			}
+		} else {
+			System.err.println("Warning unresolved binding:" + node + "; must check it is not a variable.");
+		}
+		return super.visit(node);
+	}
+	
+	@Override
+	public boolean preVisit2(ASTNode node) {
+		if (node instanceof Statement)
+		{
+			order++;
+			statements_order.put((Statement)node, order);
+			int idx = concerned_statements.indexOf(node);
+			if (idx < 0) {
+				// Not found. Do nothing.
+			} else {
+				if (idx < concerned) {
+					return false;
+				} else {
+					if (idx == concerned) {
+						signal = true;
+						cared_statement = (Statement) node;
+						concerned_dependencies.put(cared_statement, new Dependency());
+					} else {
+						System.err.println("What the fuck? skip some concerned statements?");
+						System.exit(1);
+					}
+				}
+			}
+		}
+		return super.preVisit2(node);
+	}
+	
+	@Override
+	public void postVisit(ASTNode node) {
+		if (node instanceof Statement)
+		{
+			int idx = concerned_statements.indexOf(node);
+			if (idx == concerned) {
+				signal = false;
+				concerned++;
+				cared_statement = null;
+			}
+		}
+		super.postVisit(node);
+	}
+	
+	@Override
+	public boolean visit(VariableDeclarationStatement node) {	
+		@SuppressWarnings("unchecked")
+		List<VariableDeclarationFragment> frags = node.fragments();
+		Iterator<VariableDeclarationFragment> fitr = frags.iterator();
+		while (fitr.hasNext())
+		{
+			VariableDeclarationFragment vdf = fitr.next();
+			IBinding ib = vdf.getName().resolveBinding();
+			if (ib == null)
+			{
+				System.err.println("What the fuck! IBinding is null?" + " Wrong code is:" + node);
+				System.exit(1);
+			}
+			ibindings_dependencies.put(ib, new Dependency());
+		}
+		return super.visit(node);
+	}	
+	
+}
