@@ -26,38 +26,40 @@ public class Slicer {
 	{
 		File root = new File(testDir);
 		// System.out.println(rootDir.listFiles());
-		File[] files = root.listFiles();
-		List<File> handlefiles = new LinkedList<File>();
-		
-		for (File f : files) {
-			if (f.isFile()) {
-				String filename = f.getName();
-				if (filename.endsWith(suffix + ".java"))
+		if (root != null)
+		{
+			File[] files = root.listFiles();
+			List<File> handlefiles = new LinkedList<File>();
+			
+			for (File f : files) {
+				if (f.isFile()) {
+					String filename = f.getName();
+					if (filename.endsWith(suffix + ".java"))
+					{
+						handlefiles.add(f);
+					}
+				}
+			}
+			
+			Iterator<File> fitr = handlefiles.iterator();
+			while (fitr.hasNext())
+			{
+				File f = fitr.next();
+				String prefix = f.getName().substring(0, f.getName().lastIndexOf(suffix + ".java")) + "_";
+				ParseSliceVisitor psv = new ParseSliceVisitor(targetclass);
+				CompilationUnit cu = JDT_Util.parseSourceCode(f.getName(), new Document(FileUtil.ReadFromFile(f)));
+				// testing code.
+				// cu.accept(new TestVisitor());
+				cu.accept(psv);
+				List<TestCase> lts = psv.GetTestCases();
+				Iterator<TestCase> litr = lts.iterator();
+				while (litr.hasNext())
 				{
-					handlefiles.add(f);
+					TestCase tc = litr.next();
+					FileUtil.WriteToFile((tc.getFilename().endsWith(".java") ? prefix+tc.getFilename() : prefix+tc.getFilename()+".java"), tc.getContent(), SlicedCodeGenerator.PACKAGE);
 				}
 			}
 		}
-		
-		Iterator<File> fitr = handlefiles.iterator();
-		while (fitr.hasNext())
-		{
-			File f = fitr.next();
-			String prefix = f.getName().substring(0, f.getName().lastIndexOf(suffix + ".java")) + "_";
-			ParseSliceVisitor psv = new ParseSliceVisitor(targetclass);
-			CompilationUnit cu = JDT_Util.parseSourceCode(f.getName(), new Document(FileUtil.ReadFromFile(f)));
-			// testing code.
-			// cu.accept(new TestVisitor());
-			cu.accept(psv);
-			List<TestCase> lts = psv.GetTestCases();
-			Iterator<TestCase> litr = lts.iterator();
-			while (litr.hasNext())
-			{
-				TestCase tc = litr.next();
-				FileUtil.WriteToFile((tc.getFilename().endsWith(".java") ? prefix+tc.getFilename() : prefix+tc.getFilename()+".java"), tc.getContent(), SlicedCodeGenerator.PACKAGE);
-			}
-		}
-		
 	}
 	
 }
