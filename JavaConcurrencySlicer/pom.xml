@@ -42,4 +42,17 @@
 			<version>3.3.0-v20070606-0010</version>
 		</dependency>
 	</dependencies>
+	<build>
+		<finalName>slicer_concurrency</finalName>
+		<defaultGoal>shade</defaultGoal>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<skip>true</skip>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>
