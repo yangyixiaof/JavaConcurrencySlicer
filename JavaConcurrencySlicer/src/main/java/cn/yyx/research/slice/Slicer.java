@@ -16,11 +16,9 @@ import cn.yyx.research.slice_visitor.util.SlicedCodeGenerator;
 
 public class Slicer {
 	
-	String targetclass = null;
 	String testdir = null;
 	
-	public Slicer(String targetclass, String testDir) {
-		this.targetclass = targetclass;
+	public Slicer(String testDir) {
 		this.testdir = testDir;
 	}
 	
@@ -59,7 +57,8 @@ public class Slicer {
 			while (fitr.hasNext())
 			{
 				File f = fitr.next();
-				String prefix = f.getName().substring(0, f.getName().lastIndexOf(suffix + ".java")) + "_";
+				String targetclass = f.getName().substring(0, f.getName().lastIndexOf(suffix + ".java"));
+				String prefix = targetclass + "_";
 				ParseSliceVisitor psv = new ParseSliceVisitor(targetclass);
 				CompilationUnit cu = JDT_Util.parseSourceCode(f.getName(), new Document(FileUtil.ReadFromFile(f)));
 				// testing code.

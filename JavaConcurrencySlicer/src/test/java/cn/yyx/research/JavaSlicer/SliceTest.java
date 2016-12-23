@@ -23,7 +23,7 @@ public class SliceTest
 	@Test
 	public void testx1()
 	{
-		Slicer s = new Slicer("Stack", "test_examples");
+		Slicer s = new Slicer("test_examples");
 		s.SliceSuffixedTestInDirectory("_ESTest");
 	}
 	
