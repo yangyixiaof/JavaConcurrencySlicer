@@ -17,13 +17,24 @@ import cn.yyx.research.slice_visitor.util.SlicedCodeGenerator;
 public class Slicer {
 	
 	String targetclass = null;
+	String testdir = null;
 	
-	public Slicer(String targetclass) {
+	public Slicer(String targetclass, String testDir) {
 		this.targetclass = targetclass;
+		this.testdir = testDir;
 	}
 	
-	public void SliceSuffixedTestInDirectory(String suffix, String testDir)
+	public void SliceSuffixedTestInDirectory(String suffix)
 	{
+		SliceSuffixedTestInDirectory(suffix, testdir);
+	}
+	
+	private void SliceSuffixedTestInDirectory(String suffix, String testDir)
+	{
+		if (testDir.endsWith("/") || testDir.endsWith("\\"))
+		{
+			testDir = testDir.substring(0, testDir.length()-1);
+		}
 		File root = new File(testDir);
 		// System.out.println(rootDir.listFiles());
 		if (root != null)
@@ -41,6 +52,9 @@ public class Slicer {
 				}
 			}
 			
+			testDir = testDir.replace('\\', '/');
+			String prename = testDir.substring(testDir.indexOf('/')+1).replace('/', '_');
+			
 			Iterator<File> fitr = handlefiles.iterator();
 			while (fitr.hasNext())
 			{
@@ -56,9 +70,16 @@ public class Slicer {
 				while (litr.hasNext())
 				{
 					TestCase tc = litr.next();
-					FileUtil.WriteToFile((tc.getFilename().endsWith(".java") ? prefix+tc.getFilename() : prefix+tc.getFilename()+".java"), tc.getContent(), SlicedCodeGenerator.PACKAGE);
+					FileUtil.WriteToFile(prename+"_"+(tc.getFilename().endsWith(".java") ? prefix+tc.getFilename() : prefix+tc.getFilename()+".java"), tc.getContent(), testdir + "/" + SlicedCodeGenerator.PACKAGE);
 				}
 			}
+			
+			for (File f : files) {
+				if (f.isDirectory()) {
+					SliceSuffixedTestInDirectory(suffix, testDir+"/"+f.getName());
+				}
+			}
+			
 		}
 	}
 	
