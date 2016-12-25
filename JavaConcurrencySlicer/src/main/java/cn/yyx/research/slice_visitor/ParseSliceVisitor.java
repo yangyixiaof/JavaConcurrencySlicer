@@ -3,6 +3,7 @@ package cn.yyx.research.slice_visitor;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.jdt.core.dom.ASTVisitor;
 import org.eclipse.jdt.core.dom.ImportDeclaration;
@@ -45,7 +46,8 @@ public class ParseSliceVisitor extends ASTVisitor {
 		List<Statement> lastnms = lnmv.GetLastNMethods();
 		StatementOrderVisitor sov = new StatementOrderVisitor();
 		node.accept(sov);
-		DepenencyVisitor dv = new DepenencyVisitor(lastnms, sov.GetStatementsOrder(), classname);
+		Map<Statement, Integer> sorder = sov.GetStatementsOrder();
+		DepenencyVisitor dv = new DepenencyVisitor(lastnms, sorder, classname);
 		node.accept(dv);
 		List<String> test_contents = dv.GenerateParallelTestCases();
 		String LINETAB = SlicedCodeGenerator.ONE_LINETAB;
