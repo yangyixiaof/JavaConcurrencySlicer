@@ -23,8 +23,14 @@ public class SliceTest
 	@Test
 	public void testx1()
 	{
-		Slicer s = new Slicer("test_examples");
-		s.SliceSuffixedTestInDirectory("_ESTest");
+		try {
+			Slicer s = new Slicer("test_examples");
+			s.SliceSuffixedTestInDirectory("_ESTest");
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		
 	}
 	
 }

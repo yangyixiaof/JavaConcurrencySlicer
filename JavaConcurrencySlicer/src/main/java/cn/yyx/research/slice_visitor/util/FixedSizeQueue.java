@@ -34,6 +34,7 @@ public class FixedSizeQueue<K, T> {
 				ls = new LinkedList<T>();
 				bingds.put(k, ls);
 			}
+			ls.add(t);
 			if (ls.size() > capacity)
 			{
 				ls.remove(0);
