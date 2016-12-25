@@ -64,6 +64,15 @@ public class BaseVisitor extends ASTVisitor {
 		return (Statement) node;
 	}
 	
+	protected IBinding GetBinding(Expression expr) {
+		if (expr != null && expr instanceof SimpleName)
+		{
+			IBinding ib = ((SimpleName)expr).resolveBinding();
+			return ib;
+		}
+		return null;
+	}
+	
 	protected boolean IsConcerned(Expression expr) {
 		if (expr != null && expr instanceof SimpleName)
 		{

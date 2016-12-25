@@ -3,6 +3,7 @@ package cn.yyx.research.slice_visitor;
 import java.util.List;
 
 import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.IBinding;
 import org.eclipse.jdt.core.dom.MethodInvocation;
 import org.eclipse.jdt.core.dom.Statement;
 
@@ -10,11 +11,11 @@ import cn.yyx.research.slice_visitor.util.FixedSizeQueue;
 
 public class LastNMethodsVisitor extends BaseVisitor {
 	
-	protected FixedSizeQueue<Statement> fsq = null;
+	protected FixedSizeQueue<IBinding, Statement> fsq = null;
 	
 	public LastNMethodsVisitor(int n, String classname) {
 		super(classname);
-		fsq = new FixedSizeQueue<Statement>(n);
+		fsq = new FixedSizeQueue<IBinding, Statement>(n);
 	}
 	
 	@Override
@@ -23,7 +24,7 @@ public class LastNMethodsVisitor extends BaseVisitor {
 		if (IsConcerned(expr))
 		{
 			Statement stat = FindMostCloseAncestorStatement(node);
-			fsq.AddOneItem(stat);
+			fsq.AddOneItem(GetBinding(expr), stat);
 		}
 		return super.visit(node);
 	}

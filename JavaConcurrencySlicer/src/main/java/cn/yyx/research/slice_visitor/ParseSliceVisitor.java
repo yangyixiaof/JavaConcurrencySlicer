@@ -43,7 +43,9 @@ public class ParseSliceVisitor extends ASTVisitor {
 		LastNMethodsVisitor lnmv = new LastNMethodsVisitor(2, classname);
 		node.accept(lnmv);
 		List<Statement> lastnms = lnmv.GetLastNMethods();
-		DepenencyVisitor dv = new DepenencyVisitor(lastnms, classname);
+		StatementOrderVisitor sov = new StatementOrderVisitor();
+		node.accept(sov);
+		DepenencyVisitor dv = new DepenencyVisitor(lastnms, sov.GetStatementsOrder(), classname);
 		node.accept(dv);
 		List<String> test_contents = dv.GenerateParallelTestCases();
 		String LINETAB = SlicedCodeGenerator.ONE_LINETAB;

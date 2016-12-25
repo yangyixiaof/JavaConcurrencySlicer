@@ -38,6 +38,9 @@ public class Stack_ESTest extends Stack_ESTest_scaffolding {
 			//
 			verifyException("tutorial.Stack", e);
 		}
+		Stack<Object> stack1 = new Stack<Object>();
+		stack1.push(".TFa");
+		stack1.push(".TFa");
 	}
 
 	/*@Test(timeout = 4000)

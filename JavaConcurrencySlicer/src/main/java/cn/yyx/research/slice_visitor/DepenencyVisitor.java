@@ -20,20 +20,20 @@ import cn.yyx.research.slice_visitor.util.Dependency;
 
 public class DepenencyVisitor extends BaseVisitor {
 	
-	int order = 0;
 	int concerned = 0;
 	final List<Statement> concerned_statements;
-	Map<Statement, Integer> statements_order = new HashMap<Statement, Integer>();
+	final Map<Statement, Integer> statements_order;
 	Map<Statement, Dependency> concerned_dependencies = new HashMap<Statement, Dependency>();
 	Map<IBinding, Dependency> ibindings_dependencies = new HashMap<IBinding, Dependency>();
 	
 	boolean signal = false;
 	Statement cared_statement = null;
 	
-	public DepenencyVisitor(List<Statement> lastnms, String classname) {
+	public DepenencyVisitor(List<Statement> lastnms, Map<Statement, Integer> sorder, String classname) {
 		super(classname);
-		concerned_statements = lastnms;
-		
+		statements_order = sorder;
+		Dependency dep = new Dependency(lastnms);
+		concerned_statements = dep.OrderedStatements(statements_order);
 		// debugging.
 		System.err.println("test:" + concerned_statements);
 	}
@@ -131,8 +131,6 @@ public class DepenencyVisitor extends BaseVisitor {
 	public boolean preVisit2(ASTNode node) {
 		if (node instanceof Statement)
 		{
-			order++;
-			statements_order.put((Statement)node, order);
 			int idx = concerned_statements.indexOf(node);
 			if (idx < 0) {
 				// Not found. Do nothing.

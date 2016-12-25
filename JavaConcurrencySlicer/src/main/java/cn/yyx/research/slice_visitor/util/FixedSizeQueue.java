@@ -1,13 +1,18 @@
 package cn.yyx.research.slice_visitor.util;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 
-public class FixedSizeQueue<T> {
+public class FixedSizeQueue<K, T> {
 	
-	protected int capacity = 0;
-	private List<T> items = new LinkedList<T>();
+	private int capacity = 0;
+	private Set<T> items = new HashSet<T>();
+	private Map<K, LinkedList<T>> bingds = new HashMap<K, LinkedList<T>>();
 	
 	public FixedSizeQueue(int capacity) {
 		this.capacity = capacity;
@@ -18,22 +23,38 @@ public class FixedSizeQueue<T> {
 		}
 	}
 	
-	public void AddOneItem(T t)
+	public void AddOneItem(K k, T t)
 	{
-		getItems().add(t);
-		if (getItems().size() > capacity)
+		if (!items.contains(t))
 		{
-			getItems().remove(0);
+			items.add(t);
+			LinkedList<T> ls = bingds.get(k);
+			if (ls == null)
+			{
+				ls = new LinkedList<T>();
+				bingds.put(k, ls);
+			}
+			if (ls.size() > capacity)
+			{
+				ls.remove(0);
+			}
 		}
-	}
-	
-	public Iterator<T> Iterator()
-	{
-		return getItems().iterator();
 	}
 
 	public List<T> getItems() {
-		return items;
+		List<T> result = new LinkedList<T>();
+		Set<K> bkeys = bingds.keySet();
+		Iterator<K> bitr = bkeys.iterator();
+		while (bitr.hasNext())
+		{
+			K bk = bitr.next();
+			LinkedList<T> bls = bingds.get(bk);
+			if (bls != null)
+			{
+				result.addAll(bls);
+			}
+		}
+		return result;
 	}
 	
 }
