@@ -2,6 +2,7 @@ package cn.yyx.research.slice_visitor;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -12,6 +13,7 @@ import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.IBinding;
 import org.eclipse.jdt.core.dom.SimpleName;
 import org.eclipse.jdt.core.dom.Statement;
+import org.eclipse.jdt.core.dom.TryStatement;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
 
@@ -27,6 +29,8 @@ public class DepenencyVisitor extends BaseVisitor {
 	Map<Statement, Dependency> concerned_dependencies = new HashMap<Statement, Dependency>();
 	Map<IBinding, Dependency> ibindings_dependencies = new HashMap<IBinding, Dependency>();
 	
+	boolean concern_signal = false;
+	Set<IBinding> concern_bindings = new HashSet<IBinding>();
 	boolean signal = false;
 	Statement cared_statement = null;
 	
@@ -125,6 +129,18 @@ public class DepenencyVisitor extends BaseVisitor {
 			if (depd == null) {
 				// System.err.println("Warning no binding:" + node + "; must check it is not a variable.");
 			} else {
+				if (concern_signal) {
+					Iterator<IBinding> citr = concern_bindings.iterator();
+					while (citr.hasNext())
+					{
+						IBinding cib = citr.next();
+						Dependency dd = ibindings_dependencies.get(cib);
+						if (dd != null)
+						{
+							dd.Union(depd);
+						}
+					}
+				}
 				if (signal) {
 					Dependency dd = concerned_dependencies.get(cared_statement);
 					dd.Union(depd);
@@ -140,8 +156,17 @@ public class DepenencyVisitor extends BaseVisitor {
 	
 	@Override
 	public boolean preVisit2(ASTNode node) {
-		if (node instanceof Statement)
+		if (node instanceof Statement && !(node instanceof TryStatement))
 		{
+			ConcernedBindingVisitor cbv = new ConcernedBindingVisitor(concerned_bindings);
+			node.accept(cbv);
+			if (cbv.IsConcernedStatement())
+			{
+				concern_signal = true;
+				concern_bindings = cbv.GetConcernedBindings();
+			}
+			
+			// original logic.
 			int idx = concerned_statements.indexOf(node);
 			if (idx < 0) {
 				// Not found. Do nothing.
@@ -165,8 +190,17 @@ public class DepenencyVisitor extends BaseVisitor {
 	
 	@Override
 	public void postVisit(ASTNode node) {
-		if (node instanceof Statement)
+		if (node instanceof Statement && !(node instanceof TryStatement))
 		{
+			ConcernedBindingVisitor cbv = new ConcernedBindingVisitor(concerned_bindings);
+			node.accept(cbv);
+			if (cbv.IsConcernedStatement())
+			{
+				concern_signal = false;
+				concern_bindings.clear();
+			}
+			
+			// original logic.
 			int idx = concerned_statements.indexOf(node);
 			if (idx == concerned) {
 				signal = false;
