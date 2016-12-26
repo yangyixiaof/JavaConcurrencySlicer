@@ -35,12 +35,12 @@ public class SlicedCodeGenerator {
 		while (slitr.hasNext())
 		{
 			Statement stat = slitr.next();
-			code.add(tab + stat.toString());
 			ConcernedBindingVisitor cbv = new ConcernedBindingVisitor(final_binds);
 			stat.accept(cbv);
-			if (cbv.IsConcernedStatement())
-			{
+			if (cbv.IsConcernedStatement()) {
 				code.add(tab + "final " + stat.toString());
+			} else {
+				code.add(tab + stat.toString());
 			}
 		}
 	}

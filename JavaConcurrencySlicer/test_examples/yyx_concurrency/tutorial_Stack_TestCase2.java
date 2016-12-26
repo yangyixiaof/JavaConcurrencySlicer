@@ -11,6 +11,7 @@ public class tutorial_Stack_TestCase2 {
     public static void main(String[] args) throws Exception {
         Stack<String> stack0=new Stack<String>();
         Stack<Object> stack1=new Stack<Object>();
+        final Stack<Object> stack1=new Stack<Object>();
         stack1.push(".TFa");
         stack1.push(stack0);
         stack1.push(".TFa");

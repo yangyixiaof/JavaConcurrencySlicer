@@ -135,7 +135,7 @@ public class DepenencyVisitor extends BaseVisitor {
 		test_code.addAll(common_teset_code);
 		test_code.addAll(concurrency_test_code);
 		
-		return concurrency_test_code;
+		return test_code;
 	}
 	
 	@Override

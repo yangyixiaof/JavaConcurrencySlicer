@@ -10,18 +10,9 @@ public class tutorial_Stack_TestCase5 {
 
     public static void main(String[] args) throws Exception {
         Integer integer0=new Integer(0);
+        final Integer integer0=new Integer(0);
         Stack<Object> stack1=new Stack<Object>();
         Thread t1 = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Stack<Integer> stack0=new Stack<Integer>();
-                    stack0.push(integer0);
-                } catch (Exception e) {
-                }
-            }
-        });
-        Thread t2 = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
@@ -31,7 +22,7 @@ public class tutorial_Stack_TestCase5 {
                 }
             }
         });
-        Thread t3 = new Thread(new Runnable() {
+        Thread t2 = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
@@ -40,11 +31,21 @@ public class tutorial_Stack_TestCase5 {
                 }
             }
         });
-        Thread t4 = new Thread(new Runnable() {
+        Thread t3 = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
                     stack1.pop();
+                } catch (Exception e) {
+                }
+            }
+        });
+        Thread t4 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Stack<Integer> stack0=new Stack<Integer>();
+                    stack0.push(integer0);
                 } catch (Exception e) {
                 }
             }

@@ -12,20 +12,30 @@ public class tutorial_Stack_TestCase4 {
         Stack<String> stack0=new Stack<String>();
         stack0.push(".TFaE");
         Stack<Object> stack1=new Stack<Object>();
+        final Stack<Object> stack1=new Stack<Object>();
         stack1.push(".TFaE");
         stack1.push(stack0);
         stack1.push(".TFaE");
         stack1.push(stack0);
         Object[] objectArray0=new Object[9];
+        final Object[] objectArray0=new Object[9];
         objectArray0[0]=(Object)".TFaE";
+        final objectArray0[0]=(Object)".TFaE";
         objectArray0[1]=(Object)stack1;
+        final objectArray0[1]=(Object)stack1;
         objectArray0[2]=(Object)".TFaE";
+        final objectArray0[2]=(Object)".TFaE";
         objectArray0[3]=object0;
         objectArray0[4]=(Object)".TFaE";
+        final objectArray0[4]=(Object)".TFaE";
         objectArray0[5]=(Object)".TFaE";
+        final objectArray0[5]=(Object)".TFaE";
         objectArray0[6]=(Object)stack0;
+        final objectArray0[6]=(Object)stack0;
         objectArray0[7]=(Object)stack0;
+        final objectArray0[7]=(Object)stack0;
         objectArray0[8]=(Object)stack0;
+        final objectArray0[8]=(Object)stack0;
         stack1.push(stack0);
         stack0.push(".TFaE");
         stack1.push(".TFaE");
@@ -37,8 +47,7 @@ public class tutorial_Stack_TestCase4 {
             @Override
             public void run() {
                 try {
-                    Object object1=new Object();
-                    stack1.push(object1);
+                    stack0.pop();
                 } catch (Exception e) {
                 }
             }
@@ -56,7 +65,8 @@ public class tutorial_Stack_TestCase4 {
             @Override
             public void run() {
                 try {
-                    stack0.pop();
+                    Object object1=new Object();
+                    stack1.push(object1);
                 } catch (Exception e) {
                 }
             }
