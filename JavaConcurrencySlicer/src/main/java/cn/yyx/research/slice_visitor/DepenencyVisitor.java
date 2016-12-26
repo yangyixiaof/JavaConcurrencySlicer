@@ -35,7 +35,7 @@ public class DepenencyVisitor extends BaseVisitor {
 		Dependency dep = new Dependency(lastnms);
 		concerned_statements = dep.OrderedStatements(statements_order);
 		// debugging.
-		System.err.println("test:" + concerned_statements);
+		// System.err.println("test:" + concerned_statements);
 	}
 	
 	public List<String> GenerateParallelTestCases()
@@ -121,7 +121,7 @@ public class DepenencyVisitor extends BaseVisitor {
 		if (ib != null) {
 			Dependency depd = ibindings_dependencies.get(ib);
 			if (depd == null) {
-				System.err.println("Warning no binding:" + node + "; must check it is not a variable.");
+				// System.err.println("Warning no binding:" + node + "; must check it is not a variable.");
 			} else {
 				if (signal) {
 					Dependency dd = concerned_dependencies.get(cared_statement);
@@ -131,7 +131,7 @@ public class DepenencyVisitor extends BaseVisitor {
 				}
 			}
 		} else {
-			System.err.println("Warning unresolved binding:" + node + "; must check it is not a variable.");
+			// System.err.println("Warning unresolved binding:" + node + "; must check it is not a variable.");
 		}
 		return super.visit(node);
 	}
