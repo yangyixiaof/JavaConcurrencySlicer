@@ -9,8 +9,8 @@ import tutorial.Stack;
 public class tutorial_Stack_TestCase1 {
 
     public static void main(String[] args) throws Exception {
-        Stack<Object> stack0=new Stack<Object>();
-        Stack<Object> stack1=new Stack<Object>();
+        final Stack<Object> stack0=new Stack<Object>();
+        final Stack<Object> stack1=new Stack<Object>();
         Thread t1 = new Thread(new Runnable() {
             @Override
             public void run() {

@@ -6,6 +6,7 @@ import java.util.Set;
 
 import org.eclipse.jdt.core.dom.IBinding;
 import org.eclipse.jdt.core.dom.Statement;
+import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
 
 import cn.yyx.research.slice_visitor.ConcernedBindingVisitor;
 
@@ -37,7 +38,7 @@ public class SlicedCodeGenerator {
 			Statement stat = slitr.next();
 			ConcernedBindingVisitor cbv = new ConcernedBindingVisitor(final_binds);
 			stat.accept(cbv);
-			if (cbv.IsConcernedStatement()) {
+			if (cbv.IsConcernedStatement() && (stat instanceof VariableDeclarationStatement)) {
 				code.add(tab + "final " + stat.toString());
 			} else {
 				code.add(tab + stat.toString());

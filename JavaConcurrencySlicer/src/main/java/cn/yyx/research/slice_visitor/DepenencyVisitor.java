@@ -87,6 +87,7 @@ public class DepenencyVisitor extends BaseVisitor {
 			Statement stat = statement_array.get(i);
 			Dependency depd = dependency_array.get(i);
 			Dependency depd_clone = new Dependency(depd);
+			depd_clone.AddStatement(stat);
 			depd_clone.Subtraction(commondep);
 			
 			Iterator<Statement> ditr = depd_clone.Iterator();
@@ -108,7 +109,7 @@ public class DepenencyVisitor extends BaseVisitor {
 			
 			tab += SlicedCodeGenerator.ONE_LINETAB;
 			SlicedCodeGenerator.AppendStatements(concurrency_test_code, depd_clone.OrderedStatements(statements_order), tab);
-			SlicedCodeGenerator.AppendOneStatement(concurrency_test_code, stat, tab);
+			// SlicedCodeGenerator.AppendOneStatement(concurrency_test_code, stat, tab);
 			tab = tab.substring(SlicedCodeGenerator.ONE_LINETAB.length());
 			
 			concurrency_test_code.add(tab + "} catch (Exception e) {\n");
