@@ -16,7 +16,7 @@ public class TestCase1 {
             @Override
             public void run() {
                 try {
-                    stack0.isEmpty();
+                    stack1.push(".TFa");
                 } catch (Exception e) {
                 }
             }
@@ -34,7 +34,7 @@ public class TestCase1 {
             @Override
             public void run() {
                 try {
-                    stack1.push(".TFa");
+                    stack0.isEmpty();
                 } catch (Exception e) {
                 }
             }

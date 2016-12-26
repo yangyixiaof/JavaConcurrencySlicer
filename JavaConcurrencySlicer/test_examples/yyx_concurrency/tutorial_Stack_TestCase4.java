@@ -38,7 +38,8 @@ public class TestCase4 {
             @Override
             public void run() {
                 try {
-                    stack0.pop();
+                    Object object1=new Object();
+                    stack1.push(object1);
                 } catch (Exception e) {
                 }
             }
@@ -47,7 +48,7 @@ public class TestCase4 {
             @Override
             public void run() {
                 try {
-                    stack1.push(".TFZaE");
+                    stack0.pop();
                 } catch (Exception e) {
                 }
             }
@@ -56,8 +57,7 @@ public class TestCase4 {
             @Override
             public void run() {
                 try {
-                    Object object1=new Object();
-                    stack1.push(object1);
+                    stack1.push(".TFZaE");
                 } catch (Exception e) {
                 }
             }

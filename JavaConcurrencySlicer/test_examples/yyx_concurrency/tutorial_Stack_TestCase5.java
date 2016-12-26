@@ -15,9 +15,7 @@ public class TestCase5 {
             @Override
             public void run() {
                 try {
-                    Stack<String> stack2=new Stack<String>();
-                    PrivateAccess.setVariable((Class<Stack>)Stack.class,(Stack)stack2,"pointer",(Object)1948);
-                    stack2.pop();
+                    stack1.push(integer0);
                 } catch (Exception e) {
                 }
             }
@@ -26,7 +24,8 @@ public class TestCase5 {
             @Override
             public void run() {
                 try {
-                    stack1.push(integer0);
+                    Stack<Integer> stack0=new Stack<Integer>();
+                    stack0.push(integer0);
                 } catch (Exception e) {
                 }
             }
@@ -44,8 +43,9 @@ public class TestCase5 {
             @Override
             public void run() {
                 try {
-                    Stack<Integer> stack0=new Stack<Integer>();
-                    stack0.push(integer0);
+                    Stack<String> stack2=new Stack<String>();
+                    PrivateAccess.setVariable((Class<Stack>)Stack.class,(Stack)stack2,"pointer",(Object)1948);
+                    stack2.pop();
                 } catch (Exception e) {
                 }
             }

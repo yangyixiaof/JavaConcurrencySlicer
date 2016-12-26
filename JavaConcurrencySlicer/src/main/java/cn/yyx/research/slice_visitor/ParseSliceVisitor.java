@@ -60,7 +60,7 @@ public class ParseSliceVisitor extends ASTVisitor {
 			sb.append(import_content.toString() + "\n\n");
 		}
 		sb.append("public class " + "TestCase" + count + " {\n\n");
-		sb.append(LINETAB + "public static main(String[] args) throws Exception {\n");
+		sb.append(LINETAB + "public static void main(String[] args) throws Exception {\n");
 		LINETAB += SlicedCodeGenerator.ONE_LINETAB;
 		Iterator<String> titr = test_contents.iterator();
 		while (titr.hasNext())
