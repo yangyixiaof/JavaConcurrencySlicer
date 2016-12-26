@@ -69,7 +69,9 @@ public class Slicer {
 				while (litr.hasNext())
 				{
 					TestCase tc = litr.next();
-					FileUtil.WriteToFile(prename+"_"+(tc.getFilename().endsWith(".java") ? prefix+tc.getFilename() : prefix+tc.getFilename()+".java"), tc.getContent(), testdir + "/" + SlicedCodeGenerator.PACKAGE);
+					String testname = prename+"_"+(tc.getFilename().endsWith(".java") ? prefix+tc.getFilename() : prefix+tc.getFilename()+".java");
+					String classname = testname.substring(0, testname.indexOf(".java"));
+					FileUtil.WriteToFile(testname, tc.getContent().replace(ParseSliceVisitor.Class_Final_Name, classname), testdir + "/" + SlicedCodeGenerator.PACKAGE);
 				}
 			}
 			

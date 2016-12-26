@@ -158,6 +158,10 @@ public class DepenencyVisitor extends BaseVisitor {
 	public boolean preVisit2(ASTNode node) {
 		if (node instanceof Statement && !(node instanceof TryStatement))
 		{
+			if (node.toString().trim().startsWith("PrivateAccess."))
+			{
+				return false;
+			}
 			ConcernedBindingVisitor cbv = new ConcernedBindingVisitor(concerned_bindings);
 			node.accept(cbv);
 			if (cbv.IsConcernedStatement())
@@ -192,6 +196,10 @@ public class DepenencyVisitor extends BaseVisitor {
 	public void postVisit(ASTNode node) {
 		if (node instanceof Statement && !(node instanceof TryStatement))
 		{
+			if (node.toString().trim().startsWith("PrivateAccess."))
+			{
+				return;
+			}
 			ConcernedBindingVisitor cbv = new ConcernedBindingVisitor(concerned_bindings);
 			node.accept(cbv);
 			if (cbv.IsConcernedStatement())
