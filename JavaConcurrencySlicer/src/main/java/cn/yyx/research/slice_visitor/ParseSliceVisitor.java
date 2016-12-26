@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.jdt.core.dom.ASTVisitor;
+import org.eclipse.jdt.core.dom.IBinding;
 import org.eclipse.jdt.core.dom.ImportDeclaration;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.Statement;
@@ -44,10 +45,11 @@ public class ParseSliceVisitor extends ASTVisitor {
 		LastNMethodsVisitor lnmv = new LastNMethodsVisitor(2, classname);
 		node.accept(lnmv);
 		List<Statement> lastnms = lnmv.GetLastNMethods();
+		List<IBinding> cbinds = lnmv.GetConcernedBindings();
 		StatementOrderVisitor sov = new StatementOrderVisitor();
 		node.accept(sov);
 		Map<Statement, Integer> sorder = sov.GetStatementsOrder();
-		DepenencyVisitor dv = new DepenencyVisitor(lastnms, sorder, classname);
+		DepenencyVisitor dv = new DepenencyVisitor(cbinds, lastnms, sorder, classname);
 		node.accept(dv);
 		List<String> test_contents = dv.GenerateParallelTestCases();
 		String LINETAB = SlicedCodeGenerator.ONE_LINETAB;

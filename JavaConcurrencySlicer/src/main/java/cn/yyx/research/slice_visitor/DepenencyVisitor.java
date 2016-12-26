@@ -21,6 +21,7 @@ import cn.yyx.research.slice_visitor.util.Dependency;
 public class DepenencyVisitor extends BaseVisitor {
 	
 	int concerned = 0;
+	final List<IBinding> concerned_bindings;
 	final List<Statement> concerned_statements;
 	final Map<Statement, Integer> statements_order;
 	Map<Statement, Dependency> concerned_dependencies = new HashMap<Statement, Dependency>();
@@ -29,11 +30,12 @@ public class DepenencyVisitor extends BaseVisitor {
 	boolean signal = false;
 	Statement cared_statement = null;
 	
-	public DepenencyVisitor(List<Statement> lastnms, Map<Statement, Integer> sorder, String classname) {
+	public DepenencyVisitor(List<IBinding> cbinds, List<Statement> lastnms, Map<Statement, Integer> sorder, String classname) {
 		super(classname);
 		statements_order = sorder;
 		Dependency dep = new Dependency(lastnms);
 		concerned_statements = dep.OrderedStatements(statements_order);
+		concerned_bindings = cbinds;
 		// debugging.
 		// System.err.println("test:" + concerned_statements);
 	}

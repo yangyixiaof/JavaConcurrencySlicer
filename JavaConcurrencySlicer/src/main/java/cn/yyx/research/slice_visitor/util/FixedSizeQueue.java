@@ -58,4 +58,11 @@ public class FixedSizeQueue<K, T> {
 		return result;
 	}
 	
+	public List<K> getKeys() {
+		List<K> result = new LinkedList<K>();
+		Set<K> bkeys = bingds.keySet();
+		result.addAll(bkeys);
+		return result;
+	}
+	
 }

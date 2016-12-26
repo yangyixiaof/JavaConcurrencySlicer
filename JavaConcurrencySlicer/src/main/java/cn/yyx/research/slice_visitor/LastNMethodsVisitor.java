@@ -34,4 +34,9 @@ public class LastNMethodsVisitor extends BaseVisitor {
 		return fsq.getItems();
 	}
 	
+	public List<IBinding> GetConcernedBindings()
+	{
+		return fsq.getKeys();
+	}
+	
 }
