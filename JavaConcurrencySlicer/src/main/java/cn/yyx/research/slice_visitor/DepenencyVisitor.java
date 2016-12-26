@@ -44,23 +44,32 @@ public class DepenencyVisitor extends BaseVisitor {
 		ArrayList<Statement> statement_array = new ArrayList<Statement>();
 		ArrayList<Dependency> dependency_array = new ArrayList<Dependency>();
 		
-		Dependency commondep = null;
+		Dependency commondep = new Dependency();
 		
 		Set<Statement> keys = concerned_dependencies.keySet();
-		Iterator<Statement> kitr = keys.iterator();
-		while (kitr.hasNext())
+		Iterator<Statement> kitr1 = keys.iterator();
+		while (kitr1.hasNext())
 		{
-			Statement stat = kitr.next();
-			Dependency deped = concerned_dependencies.get(stat);
-			
-			if (commondep == null) {
-				commondep = new Dependency(deped);
-			} else {
-				commondep.Intersection(deped);
+			Statement stat1 = kitr1.next();
+			Dependency deped1 = concerned_dependencies.get(stat1);
+			Iterator<Statement> kitr2 = keys.iterator();
+			while (kitr2.hasNext())
+			{
+				Statement stat2 = kitr2.next();
+				if (stat1 == stat2) { break; }
+			}
+			while (kitr2.hasNext())
+			{
+				Statement stat2 = kitr2.next();
+				Dependency deped2 = concerned_dependencies.get(stat2);
+				Dependency deped1_clone = new Dependency(deped1);
+				Dependency deped2_clone = new Dependency(deped2);
+				deped1_clone.Intersection(deped2_clone);
+				commondep.Union(deped1_clone);
 			}
 			
-			statement_array.add(stat);
-			dependency_array.add(deped);
+			statement_array.add(stat1);
+			dependency_array.add(deped1);
 		}
 		
 		List<Statement> common_statements = commondep.OrderedStatements(statements_order);
