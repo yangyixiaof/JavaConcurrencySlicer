@@ -47,7 +47,7 @@ public class tutorial_Stack_TestCase4 {
             @Override
             public void run() {
                 try {
-                    stack0.pop();
+                    stack1.push(".TFZaE");
                 } catch (Exception e) {
                 }
             }
@@ -56,7 +56,7 @@ public class tutorial_Stack_TestCase4 {
             @Override
             public void run() {
                 try {
-                    stack1.push(".TFZaE");
+                    stack0.pop();
                 } catch (Exception e) {
                 }
             }

@@ -26,6 +26,11 @@ public class Dependency {
 		statements.addAll(smts);
 	}
 	
+	public Iterator<Statement> Iterator()
+	{
+		return statements.iterator();
+	}
+	
 	public void Union(Dependency depd)
 	{
 		statements.addAll(depd.statements);

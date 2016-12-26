@@ -10,12 +10,16 @@ import org.eclipse.jdt.core.dom.SimpleName;
 
 public class ConcernedBindingVisitor extends ASTVisitor {
 	
-	List<IBinding> concerned_bindings = null;
+	Set<IBinding> concerned_bindings = new HashSet<IBinding>();
 	boolean need_concerned = false;
 	Set<IBinding> concern_binding = new HashSet<IBinding>();
 	
 	public ConcernedBindingVisitor(List<IBinding> cbinds) {
-		concerned_bindings = cbinds;
+		concerned_bindings.addAll(cbinds);
+	}
+	
+	public ConcernedBindingVisitor(Set<IBinding> cbinds) {
+		concerned_bindings.addAll(cbinds);
 	}
 	
 	@Override

@@ -2,8 +2,12 @@ package cn.yyx.research.slice_visitor.util;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
+import org.eclipse.jdt.core.dom.IBinding;
 import org.eclipse.jdt.core.dom.Statement;
+
+import cn.yyx.research.slice_visitor.ConcernedBindingVisitor;
 
 public class SlicedCodeGenerator {
 	
@@ -22,6 +26,22 @@ public class SlicedCodeGenerator {
 		{
 			Statement stat = slitr.next();
 			code.add(tab + stat.toString());
+		}
+	}
+	
+	public static void AppendStatementsWithFinal(List<String> code, List<Statement> statement_list, Set<IBinding> final_binds, String tab)
+	{
+		Iterator<Statement> slitr = statement_list.iterator();
+		while (slitr.hasNext())
+		{
+			Statement stat = slitr.next();
+			code.add(tab + stat.toString());
+			ConcernedBindingVisitor cbv = new ConcernedBindingVisitor(final_binds);
+			stat.accept(cbv);
+			if (cbv.IsConcernedStatement())
+			{
+				code.add(tab + "final " + stat.toString());
+			}
 		}
 	}
 	

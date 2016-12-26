@@ -46,7 +46,7 @@ public class DepenencyVisitor extends BaseVisitor {
 	
 	public List<String> GenerateParallelTestCases()
 	{
-		List<String> test_code = new LinkedList<String>();
+		List<String> concurrency_test_code = new LinkedList<String>();
 		ArrayList<Statement> statement_array = new ArrayList<Statement>();
 		ArrayList<Dependency> dependency_array = new ArrayList<Dependency>();
 		
@@ -78,8 +78,7 @@ public class DepenencyVisitor extends BaseVisitor {
 			dependency_array.add(deped1);
 		}
 		
-		List<Statement> common_statements = commondep.OrderedStatements(statements_order);
-		SlicedCodeGenerator.AppendStatements(test_code, common_statements, "");
+		Set<IBinding> final_binds = new HashSet<IBinding>();
 		
 		int threadcount = 0;
 		for (int i=0;i<statement_array.size();i++)
@@ -90,35 +89,53 @@ public class DepenencyVisitor extends BaseVisitor {
 			Dependency depd_clone = new Dependency(depd);
 			depd_clone.Subtraction(commondep);
 			
+			Iterator<Statement> ditr = depd_clone.Iterator();
+			while (ditr.hasNext())
+			{
+				Statement stmt = ditr.next();
+				AllBindingVisitor abv = new AllBindingVisitor();
+				stmt.accept(abv);
+				final_binds.addAll(abv.GetAllBindings());
+			}
+			
 			String tab = SlicedCodeGenerator.ONE_LINETAB;
-			test_code.add("Thread t" + threadcount + " = new Thread(new Runnable() {\n");
-			test_code.add(tab + "@Override\n");
-			test_code.add(tab + "public void run() {\n");
+			concurrency_test_code.add("Thread t" + threadcount + " = new Thread(new Runnable() {\n");
+			concurrency_test_code.add(tab + "@Override\n");
+			concurrency_test_code.add(tab + "public void run() {\n");
 			
 			tab += SlicedCodeGenerator.ONE_LINETAB;
-			test_code.add(tab + "try {\n");
+			concurrency_test_code.add(tab + "try {\n");
 			
 			tab += SlicedCodeGenerator.ONE_LINETAB;
-			SlicedCodeGenerator.AppendStatements(test_code, depd_clone.OrderedStatements(statements_order), tab);
-			SlicedCodeGenerator.AppendOneStatement(test_code, stat, tab);
+			SlicedCodeGenerator.AppendStatements(concurrency_test_code, depd_clone.OrderedStatements(statements_order), tab);
+			SlicedCodeGenerator.AppendOneStatement(concurrency_test_code, stat, tab);
 			tab = tab.substring(SlicedCodeGenerator.ONE_LINETAB.length());
 			
-			test_code.add(tab + "} catch (Exception e) {\n");
-			test_code.add(tab + "}\n");
+			concurrency_test_code.add(tab + "} catch (Exception e) {\n");
+			concurrency_test_code.add(tab + "}\n");
 			tab = tab.substring(SlicedCodeGenerator.ONE_LINETAB.length());
 			
-			test_code.add(tab + "}\n");
-			test_code.add("});\n");
+			concurrency_test_code.add(tab + "}\n");
+			concurrency_test_code.add("});\n");
 		}
 		for (int i=0;i<threadcount;i++)
 		{
-			test_code.add("t" + (i+1) + ".start();\n");
+			concurrency_test_code.add("t" + (i+1) + ".start();\n");
 		}
 		for (int i=0;i<threadcount;i++)
 		{
-			test_code.add("t" + (i+1) + ".join();\n");
+			concurrency_test_code.add("t" + (i+1) + ".join();\n");
 		}
-		return test_code;
+		
+		List<String> common_teset_code = new LinkedList<String>();
+		List<Statement> common_statements = commondep.OrderedStatements(statements_order);
+		SlicedCodeGenerator.AppendStatementsWithFinal(common_teset_code, common_statements, final_binds, "");
+		
+		List<String> test_code = new LinkedList<String>();
+		test_code.addAll(common_teset_code);
+		test_code.addAll(concurrency_test_code);
+		
+		return concurrency_test_code;
 	}
 	
 	@Override

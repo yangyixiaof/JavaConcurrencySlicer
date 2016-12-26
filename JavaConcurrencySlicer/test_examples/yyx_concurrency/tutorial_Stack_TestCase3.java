@@ -16,7 +16,7 @@ public class tutorial_Stack_TestCase3 {
             @Override
             public void run() {
                 try {
-                    stack0.pop();
+                    assertTrue(stack0.isEmpty());
                 } catch (Exception e) {
                 }
             }
@@ -25,7 +25,7 @@ public class tutorial_Stack_TestCase3 {
             @Override
             public void run() {
                 try {
-                    assertTrue(stack0.isEmpty());
+                    stack0.pop();
                 } catch (Exception e) {
                 }
             }

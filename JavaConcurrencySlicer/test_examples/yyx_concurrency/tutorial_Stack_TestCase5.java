@@ -25,7 +25,8 @@ public class tutorial_Stack_TestCase5 {
             @Override
             public void run() {
                 try {
-                    stack1.pop();
+                    Stack<String> stack2=new Stack<String>();
+                    stack2.pop();
                 } catch (Exception e) {
                 }
             }
@@ -43,8 +44,7 @@ public class tutorial_Stack_TestCase5 {
             @Override
             public void run() {
                 try {
-                    Stack<String> stack2=new Stack<String>();
-                    stack2.pop();
+                    stack1.pop();
                 } catch (Exception e) {
                 }
             }
