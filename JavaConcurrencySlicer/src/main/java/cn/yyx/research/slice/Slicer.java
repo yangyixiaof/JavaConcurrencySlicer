@@ -53,6 +53,7 @@ public class Slicer {
 			testDir = testDir.replace('\\', '/');
 			String prename = testDir.substring(testDir.indexOf('/')+1).replace('/', '_');
 			
+			int count = 0;
 			Iterator<File> fitr = handlefiles.iterator();
 			while (fitr.hasNext())
 			{
@@ -68,10 +69,12 @@ public class Slicer {
 				Iterator<TestCase> litr = lts.iterator();
 				while (litr.hasNext())
 				{
+					count++;
 					TestCase tc = litr.next();
 					String testname = prename+"_"+(tc.getFilename().endsWith(".java") ? prefix+tc.getFilename() : prefix+tc.getFilename()+".java");
 					String classname = testname.substring(0, testname.indexOf(".java"));
-					FileUtil.WriteToFile(testname, tc.getContent().replace(ParseSliceVisitor.Class_Final_Name, classname), testdir + "/" + SlicedCodeGenerator.PACKAGE);
+					classname = classname + count;
+					FileUtil.WriteToFile(classname + ".java", tc.getContent().replace(ParseSliceVisitor.Class_Final_Name, classname), testdir + "/" + SlicedCodeGenerator.PACKAGE);
 				}
 			}
 			

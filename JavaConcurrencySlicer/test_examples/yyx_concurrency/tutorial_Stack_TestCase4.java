@@ -6,7 +6,7 @@ import tutorial.Stack;
 
 
 
-public class TestCase4 {
+public class tutorial_Stack_TestCase4 {
 
     public static void main(String[] args) throws Exception {
         Stack<String> stack0=new Stack<String>();
@@ -26,7 +26,6 @@ public class TestCase4 {
         objectArray0[6]=(Object)stack0;
         objectArray0[7]=(Object)stack0;
         objectArray0[8]=(Object)stack0;
-        PrivateAccess.setVariable((Class<Stack>)Stack.class,(Stack)stack1,"objects",(Object)objectArray0);
         stack1.push(stack0);
         stack0.push(".TFaE");
         stack1.push(".TFaE");

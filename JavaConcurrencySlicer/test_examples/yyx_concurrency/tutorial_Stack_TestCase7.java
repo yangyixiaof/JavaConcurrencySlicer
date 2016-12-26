@@ -6,7 +6,7 @@ import tutorial.Stack;
 
 
 
-public class TestCase7 {
+public class tutorial_Stack_TestCase7 {
 
     public static void main(String[] args) throws Exception {
         Thread t1 = new Thread(new Runnable() {
@@ -14,7 +14,6 @@ public class TestCase7 {
             public void run() {
                 try {
                     Stack<Object> stack0=new Stack<Object>();
-                    PrivateAccess.setVariable((Class<Stack>)Stack.class,(Stack)stack0,"pointer",(Object)2155);
                     stack0.push(stack0);
                 } catch (Exception e) {
                 }

@@ -6,7 +6,7 @@ import tutorial.Stack;
 
 
 
-public class TestCase6 {
+public class tutorial_Stack_TestCase6 {
 
     public static void main(String[] args) throws Exception {
         Stack<Object> stack0=new Stack<Object>();
