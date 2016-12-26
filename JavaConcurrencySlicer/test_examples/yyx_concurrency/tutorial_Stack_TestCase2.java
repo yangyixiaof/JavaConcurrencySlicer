@@ -9,6 +9,7 @@ import tutorial.Stack;
 public class TestCase2 {
 
     public static main(String[] args) throws Exception {
+        Stack<String> stack0=new Stack<String>();
         Stack<Object> stack1=new Stack<Object>();
         stack1.push(".TFa");
         stack1.push(stack0);
