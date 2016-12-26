@@ -6,17 +6,33 @@ import tutorial.Stack;
 
 
 
-public class TestCase1 {
+public class TestCase4 {
 
     public static main(String[] args) throws Exception {
-        Stack<Object> stack0=new Stack<Object>();
-        PrivateAccess.setVariable((Class<Stack>)Stack.class,(Stack)stack0,"pointer",(Object)(-99));
+        Stack<String> stack0=new Stack<String>();
+        stack0.push(".TFaE");
         Stack<Object> stack1=new Stack<Object>();
+        stack1.push(".TFaE");
+        stack1.push(stack0);
+        stack1.push(".TFaE");
+        stack1.push(stack0);
+        objectArray0[1]=(Object)stack1;
+        objectArray0[6]=(Object)stack0;
+        objectArray0[7]=(Object)stack0;
+        objectArray0[8]=(Object)stack0;
+        PrivateAccess.setVariable((Class<Stack>)Stack.class,(Stack)stack1,"objects",(Object)objectArray0);
+        stack1.push(stack0);
+        stack0.push(".TFaE");
+        stack1.push(".TFaE");
+        stack1.push(stack1);
+        stack1.isEmpty();
+        stack1.isEmpty();
+        stack1.push(".TFaE");
         Thread t1 = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    stack0.isEmpty();
+                    stack0.pop();
                 } catch (Exception e) {
                 }
             }
@@ -25,7 +41,7 @@ public class TestCase1 {
             @Override
             public void run() {
                 try {
-                    stack1.push(".TFa");
+                    stack1.push(".TFZaE");
                 } catch (Exception e) {
                 }
             }
@@ -34,7 +50,8 @@ public class TestCase1 {
             @Override
             public void run() {
                 try {
-                    stack1.push(".TFa");
+                    Object object1=new Object();
+                    stack1.push(object1);
                 } catch (Exception e) {
                 }
             }

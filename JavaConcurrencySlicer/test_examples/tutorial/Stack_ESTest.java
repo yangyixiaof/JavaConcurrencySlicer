@@ -43,7 +43,7 @@ public class Stack_ESTest extends Stack_ESTest_scaffolding {
 		stack1.push(".TFa");
 	}
 
-	/*@Test(timeout = 4000)
+	@Test(timeout = 4000)
 	public void test1() throws Throwable {
 		Stack<String> stack0 = new Stack<String>();
 		Stack<Object> stack1 = new Stack<Object>();
@@ -182,5 +182,5 @@ public class Stack_ESTest extends Stack_ESTest_scaffolding {
 			//
 			verifyException("tutorial.Stack", e);
 		}
-	}*/
+	}
 }
