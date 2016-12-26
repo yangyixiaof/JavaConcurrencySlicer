@@ -8,7 +8,7 @@ import tutorial.Stack;
 
 public class TestCase3 {
 
-    public static main(String[] args) throws Exception {
+    public static void main(String[] args) throws Exception {
         Stack<Object> stack0=new Stack<Object>();
         stack0.push((Object)null);
         assertFalse(stack0.isEmpty());

@@ -8,7 +8,7 @@ import tutorial.Stack;
 
 public class TestCase6 {
 
-    public static main(String[] args) throws Exception {
+    public static void main(String[] args) throws Exception {
         Stack<Object> stack0=new Stack<Object>();
         Thread t1 = new Thread(new Runnable() {
             @Override

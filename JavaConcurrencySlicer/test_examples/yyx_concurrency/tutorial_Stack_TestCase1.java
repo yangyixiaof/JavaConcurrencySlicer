@@ -8,7 +8,7 @@ import tutorial.Stack;
 
 public class TestCase1 {
 
-    public static main(String[] args) throws Exception {
+    public static void main(String[] args) throws Exception {
         Stack<Object> stack0=new Stack<Object>();
         PrivateAccess.setVariable((Class<Stack>)Stack.class,(Stack)stack0,"pointer",(Object)(-99));
         Stack<Object> stack1=new Stack<Object>();
@@ -16,7 +16,7 @@ public class TestCase1 {
             @Override
             public void run() {
                 try {
-                    stack1.push(".TFa");
+                    stack0.isEmpty();
                 } catch (Exception e) {
                 }
             }
@@ -34,7 +34,7 @@ public class TestCase1 {
             @Override
             public void run() {
                 try {
-                    stack0.isEmpty();
+                    stack1.push(".TFa");
                 } catch (Exception e) {
                 }
             }
