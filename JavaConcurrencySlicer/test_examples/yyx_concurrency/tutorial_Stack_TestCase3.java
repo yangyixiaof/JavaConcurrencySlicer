@@ -9,7 +9,7 @@ import tutorial.Stack;
 public class tutorial_Stack_TestCase3 {
 
     public static void main(String[] args) throws Exception {
-        Stack<Object> stack0=new Stack<Object>();
+        final Stack<Object> stack0=new Stack<Object>();
         stack0.push((Object)null);
         assertFalse(stack0.isEmpty());
         Thread t1 = new Thread(new Runnable() {
