@@ -4,7 +4,8 @@ import tutorial.Stack;
 
 import org.junit.Test;
 
-public class tutorial {
+public class tutorial_Stack_Test {
+
     @Test
     public void test1() {
         final Stack<Object> stack0=new Stack<Object>();
@@ -54,6 +55,7 @@ public class tutorial {
         t3.join();
         t4.join();
     }
+
     @Test
     public void test2() {
         Stack<String> stack0=new Stack<String>();
@@ -91,6 +93,7 @@ public class tutorial {
         t1.join();
         t2.join();
     }
+
     @Test
     public void test3() {
         final Stack<Object> stack0=new Stack<Object>();
@@ -119,6 +122,7 @@ public class tutorial {
         t1.join();
         t2.join();
     }
+
     @Test
     public void test4() {
         final Stack<String> stack0=new Stack<String>();
@@ -191,6 +195,7 @@ public class tutorial {
         t3.join();
         t4.join();
     }
+
     @Test
     public void test5() {
         final Integer integer0=new Integer(0);
@@ -242,6 +247,7 @@ public class tutorial {
         t3.join();
         t4.join();
     }
+
     @Test
     public void test6() {
         final Stack<Object> stack0=new Stack<Object>();
@@ -268,6 +274,7 @@ public class tutorial {
         t1.join();
         t2.join();
     }
+
     @Test
     public void test7() {
         Thread t1 = new Thread(new Runnable() {
@@ -283,4 +290,5 @@ public class tutorial {
         t1.start();
         t1.join();
     }
+
 }
