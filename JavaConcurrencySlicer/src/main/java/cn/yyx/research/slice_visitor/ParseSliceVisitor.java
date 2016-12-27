@@ -59,24 +59,36 @@ public class ParseSliceVisitor extends ASTVisitor {
 		}
 		sb.append("public class " + Class_Final_Name + " {\n\n");
 		sb.append(LINETAB + "public static void main(String[] args) throws Exception {\n");
+		
+		
+		StringBuilder test_content = new StringBuilder();
 		LINETAB += SlicedCodeGenerator.ONE_LINETAB;
 		Iterator<String> titr = test_contents.iterator();
 		while (titr.hasNext())
 		{
 			String one_content = titr.next();
-			sb.append(LINETAB + one_content);
+			String oneline = LINETAB + one_content;
+			sb.append(oneline);
+			test_content.append(oneline);
 		}
+		
+		
 		LINETAB = LINETAB.substring(SlicedCodeGenerator.ONE_LINETAB.length());
 		sb.append(LINETAB + "}\n\n");
 		sb.append("}\n");
 		
-		test_cases.add(new TestCase("TestCase" + ".java", sb.toString()));
+		test_cases.add(new TestCase("TestCase" + ".java", sb.toString(), test_content.toString()));
 		return false;
 	}
 	
 	public List<TestCase> GetTestCases()
 	{
 		return test_cases;
+	}
+	
+	public String GetImportContent()
+	{
+		return import_content.toString();
 	}
 	
 }

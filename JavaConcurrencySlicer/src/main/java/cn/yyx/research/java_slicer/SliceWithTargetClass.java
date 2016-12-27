@@ -1,12 +1,11 @@
 package cn.yyx.research.java_slicer;
 
-import java.util.List;
-
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jface.text.Document;
 
 import cn.yyx.research.jdt_helper.JDT_Util;
 import cn.yyx.research.slice_visitor.ParseSliceVisitor;
+import cn.yyx.research.slice_visitor.util.TestSuite;
 
 public class SliceWithTargetClass {
 	
@@ -23,13 +22,13 @@ public class SliceWithTargetClass {
 		}
 	}
 	
-	public List<TestCase> SliceOneJunitTest(String classname, String classcontent)
+	public TestSuite SliceOneJunitTest(String classname, String classcontent)
 	{
 		CompilationUnit icu = JDT_Util.parseSourceCode(classname, new Document(classcontent));
 		ParseSliceVisitor psv = new ParseSliceVisitor(target_class_simple_name);
 		icu.accept(psv);
-		List<TestCase> result = psv.GetTestCases();
-		return result;
+		TestSuite ts = new TestSuite(psv.GetImportContent(), psv.GetTestCases());
+		return ts;
 	}
 	
 }

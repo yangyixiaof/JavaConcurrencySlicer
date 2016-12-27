@@ -76,6 +76,24 @@ public class Slicer {
 					classname = classname + count;
 					FileUtil.WriteToFile(classname + ".java", tc.getContent().replace(ParseSliceVisitor.Class_Final_Name, classname), testdir + "/" + SlicedCodeGenerator.PACKAGE);
 				}
+				StringBuilder unit_test = new StringBuilder("");
+				String import_content = psv.GetImportContent().trim();
+				import_content += "\n\nimport org.junit.Test;\n\n";
+				unit_test.append(import_content);
+				unit_test.append("public class " + prename + " {\n");
+				count = 0;
+				litr = lts.iterator();
+				while (litr.hasNext())
+				{
+					count++;
+					TestCase tc = litr.next();
+					unit_test.append(SlicedCodeGenerator.ONE_LINETAB + "@Test\n");
+					unit_test.append(SlicedCodeGenerator.ONE_LINETAB + "public void test" + count + "() {\n");
+					unit_test.append(tc.getOneCase());
+					unit_test.append(SlicedCodeGenerator.ONE_LINETAB + "}\n");
+				}
+				unit_test.append("}\n");
+				FileUtil.WriteToFile(prename + ".java", unit_test.toString(), testdir + "/" + SlicedCodeGenerator.PACKAGE);
 			}
 			
 			for (File f : files) {
