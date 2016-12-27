@@ -24,7 +24,8 @@ public class tutorial_Stack_TestCase2 {
             @Override
             public void run() {
                 try {
-                    stack1.push(".TFa");
+                    Object object0=new Object();
+                    stack1.push(object0);
                 } catch (Exception e) {
                 }
             }
@@ -33,8 +34,7 @@ public class tutorial_Stack_TestCase2 {
             @Override
             public void run() {
                 try {
-                    Object object0=new Object();
-                    stack1.push(object0);
+                    stack1.push(".TFa");
                 } catch (Exception e) {
                 }
             }
