@@ -18,6 +18,7 @@ import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
 
 import cn.yyx.research.slice_visitor.util.SlicedCodeGenerator;
+import cn.yyx.research.slice_visitor.util.AvoidStatement;
 import cn.yyx.research.slice_visitor.util.Dependency;
 
 public class DepenencyVisitor extends BaseVisitor {
@@ -176,7 +177,7 @@ public class DepenencyVisitor extends BaseVisitor {
 	public boolean preVisit2(ASTNode node) {
 		if (node instanceof Statement && !(node instanceof TryStatement))
 		{
-			if (node.toString().trim().startsWith("PrivateAccess."))
+			if (AvoidStatement.IsAvoided(node))
 			{
 				return false;
 			}
@@ -214,7 +215,7 @@ public class DepenencyVisitor extends BaseVisitor {
 	public void postVisit(ASTNode node) {
 		if (node instanceof Statement && !(node instanceof TryStatement))
 		{
-			if (node.toString().trim().startsWith("PrivateAccess."))
+			if (AvoidStatement.IsAvoided(node))
 			{
 				return;
 			}
