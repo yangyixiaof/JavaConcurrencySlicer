@@ -223,7 +223,7 @@ public class DepenencyVisitor extends BaseVisitor {
 					if (idx == concerned) {
 						signal = true;
 						cared_statement = (Statement) node;
-						concerned_dependencies.put(cared_statement, new Dependency());
+						concerned_dependencies.put(cared_statement, new Dependency(lazy_dependency));
 					} else {
 						System.err.println("What the fuck? skip some concerned statements?");
 						System.exit(1);
