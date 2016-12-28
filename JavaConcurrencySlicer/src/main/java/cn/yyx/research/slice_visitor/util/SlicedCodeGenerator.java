@@ -13,7 +13,8 @@ import cn.yyx.research.slice_visitor.ConcernedBindingVisitor;
 public class SlicedCodeGenerator {
 	
 	public static final String ONE_LINETAB = "    ";
-	public static final String PACKAGE = "yyx_concurrency";
+	public static final String Class_Final_Name = "#Test_Case_Class#";
+	public static final String PACKAGE = "#yyx_concurrency#";
 	
 	public static void AppendOneStatement(List<String> code, Statement statement, String tab)
 	{

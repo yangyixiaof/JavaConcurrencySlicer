@@ -1,4 +1,4 @@
-package yyx_concurrency;
+package tutorial;
 
 import java.util.EmptyStackException;
 
@@ -6,17 +6,38 @@ import tutorial.Stack;
 
 
 
-public class tutorial_Stack_TestCase5 {
+public class tutorial_Stack_TestCase4 {
 
     public static void main(String[] args) throws Exception {
-        final Integer integer0=new Integer(0);
+        final Stack<String> stack0=new Stack<String>();
+        stack0.push(".TFaE");
         final Stack<Object> stack1=new Stack<Object>();
+        stack1.push(".TFaE");
+        stack1.push(stack0);
+        stack1.push(".TFaE");
+        stack1.push(stack0);
+        final Object[] objectArray0=new Object[9];
+        objectArray0[0]=(Object)".TFaE";
+        objectArray0[1]=(Object)stack1;
+        objectArray0[2]=(Object)".TFaE";
+        objectArray0[3]=object0;
+        objectArray0[4]=(Object)".TFaE";
+        objectArray0[5]=(Object)".TFaE";
+        objectArray0[6]=(Object)stack0;
+        objectArray0[7]=(Object)stack0;
+        objectArray0[8]=(Object)stack0;
+        stack1.push(stack0);
+        stack0.push(".TFaE");
+        stack1.push(".TFaE");
+        stack1.push(stack1);
+        stack1.isEmpty();
+        stack1.isEmpty();
+        stack1.push(".TFaE");
         Thread t1 = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    Stack<String> stack2=new Stack<String>();
-                    stack2.pop();
+                    stack0.pop();
                 } catch (Exception e) {
                 }
             }
@@ -25,7 +46,7 @@ public class tutorial_Stack_TestCase5 {
             @Override
             public void run() {
                 try {
-                    stack1.push(integer0);
+                    stack1.push(".TFZaE");
                 } catch (Exception e) {
                 }
             }
@@ -34,7 +55,8 @@ public class tutorial_Stack_TestCase5 {
             @Override
             public void run() {
                 try {
-                    stack1.pop();
+                    Object object1=new Object();
+                    stack1.push(object1);
                 } catch (Exception e) {
                 }
             }
@@ -43,8 +65,7 @@ public class tutorial_Stack_TestCase5 {
             @Override
             public void run() {
                 try {
-                    Stack<Integer> stack0=new Stack<Integer>();
-                    stack0.push(integer0);
+                    stack0.pop();
                 } catch (Exception e) {
                 }
             }

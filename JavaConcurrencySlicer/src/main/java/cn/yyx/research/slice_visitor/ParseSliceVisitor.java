@@ -16,8 +16,6 @@ import cn.yyx.research.slice_visitor.util.SlicedCodeGenerator;
 
 public class ParseSliceVisitor extends ASTVisitor {
 	
-	public static final String Class_Final_Name = "#Test_Case_Class#";
-	
 	private StringBuilder import_content = new StringBuilder("");
 	private List<TestCase> test_cases = new LinkedList<TestCase>();
 	
@@ -57,7 +55,7 @@ public class ParseSliceVisitor extends ASTVisitor {
 		{
 			sb.append(import_content.toString() + "\n\n");
 		}
-		sb.append("public class " + Class_Final_Name + " {\n\n");
+		sb.append("public class " + SlicedCodeGenerator.Class_Final_Name + " {\n\n");
 		sb.append(LINETAB + "public static void main(String[] args) throws Exception {\n");
 		
 		

@@ -1,4 +1,4 @@
-package yyx_concurrency;
+package tutorial;
 
 import java.util.EmptyStackException;
 

@@ -51,7 +51,7 @@ public class Slicer {
 			}
 			
 			testDir = testDir.replace('\\', '/');
-			String prename = testDir.substring(testDir.indexOf('/')+1).replace('/', '_');
+			String prename = testDir.substring(testDir.indexOf('/', testdir.length())+1).replace('/', '_');
 			
 			int count = 0;
 			Iterator<File> fitr = handlefiles.iterator();
@@ -74,27 +74,31 @@ public class Slicer {
 					String testname = prename+"_"+(tc.getFilename().endsWith(".java") ? prefix+tc.getFilename() : prefix+tc.getFilename()+".java");
 					String classname = testname.substring(0, testname.indexOf(".java"));
 					classname = classname + count;
-					FileUtil.WriteToFile(classname + ".java", tc.getContent().replace(ParseSliceVisitor.Class_Final_Name, classname), testdir + "/" + SlicedCodeGenerator.PACKAGE);
+					String packagename = prename.replaceAll("_", ".");
+					String filepackagename = prename.replaceAll("_", "/");
+					FileUtil.WriteToFile(classname + ".java", tc.getContent().replace(SlicedCodeGenerator.Class_Final_Name, classname).replace(SlicedCodeGenerator.PACKAGE, packagename), testdir + "/" + filepackagename);
 				}
-				String unit_class_test = prename + "_" + prefix + "Test";
-				StringBuilder unit_test = new StringBuilder("");
-				String import_content = psv.GetImportContent().trim();
-				import_content += "\n\nimport org.junit.Test;\n\n";
-				unit_test.append(import_content);
-				unit_test.append("public class " + unit_class_test + " {\n\n");
-				count = 0;
-				litr = lts.iterator();
-				while (litr.hasNext())
-				{
-					count++;
-					TestCase tc = litr.next();
-					unit_test.append(SlicedCodeGenerator.ONE_LINETAB + "@Test\n");
-					unit_test.append(SlicedCodeGenerator.ONE_LINETAB + "public void test" + count + "() {\n");
-					unit_test.append(tc.getOneCase());
-					unit_test.append(SlicedCodeGenerator.ONE_LINETAB + "}\n\n");
-				}
-				unit_test.append("}\n");
-				FileUtil.WriteToFile(unit_class_test + ".java", unit_test.toString(), testdir + "/" + SlicedCodeGenerator.PACKAGE);
+				
+				// unit test.
+//				String unit_class_test = prename + "_" + prefix + "Test";
+//				StringBuilder unit_test = new StringBuilder("");
+//				String import_content = psv.GetImportContent().trim();
+//				import_content += "\n\nimport org.junit.Test;\n\n";
+//				unit_test.append(import_content);
+//				unit_test.append("public class " + unit_class_test + " {\n\n");
+//				count = 0;
+//				litr = lts.iterator();
+//				while (litr.hasNext())
+//				{
+//					count++;
+//					TestCase tc = litr.next();
+//					unit_test.append(SlicedCodeGenerator.ONE_LINETAB + "@Test\n");
+//					unit_test.append(SlicedCodeGenerator.ONE_LINETAB + "public void test" + count + "() {\n");
+//					unit_test.append(tc.getOneCase());
+//					unit_test.append(SlicedCodeGenerator.ONE_LINETAB + "}\n\n");
+//				}
+//				unit_test.append("}\n");
+//				FileUtil.WriteToFile(unit_class_test + ".java", unit_test.toString(), testdir + "/" + SlicedCodeGenerator.PACKAGE);
 			}
 			
 			for (File f : files) {
