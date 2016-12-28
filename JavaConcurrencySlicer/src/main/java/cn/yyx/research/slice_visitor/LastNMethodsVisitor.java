@@ -1,5 +1,6 @@
 package cn.yyx.research.slice_visitor;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import org.eclipse.jdt.core.dom.Expression;
@@ -11,10 +12,13 @@ import cn.yyx.research.slice_visitor.util.FixedSizeQueue;
 
 public class LastNMethodsVisitor extends BaseVisitor {
 	
+	int n = 0;
 	protected FixedSizeQueue<IBinding, Statement> fsq = null;
+	List<Statement> static_concern = new LinkedList<Statement>();
 	
 	public LastNMethodsVisitor(int n, String classname) {
 		super(classname);
+		this.n = n;
 		fsq = new FixedSizeQueue<IBinding, Statement>(n);
 	}
 	
@@ -26,12 +30,26 @@ public class LastNMethodsVisitor extends BaseVisitor {
 			Statement stat = FindMostCloseAncestorStatement(node);
 			fsq.AddOneItem(GetBinding(expr), stat);
 		}
+		if (expr.toString().equals(classname))
+		{
+			Statement stat = FindMostCloseAncestorStatement(node);
+			if (!static_concern.contains(stat))
+			{
+				static_concern.add(stat);
+				if (static_concern.size() > n)
+				{
+					static_concern.remove(0);
+				}
+			}
+		}
 		return super.visit(node);
 	}
 	
 	public List<Statement> GetLastNMethods()
 	{
-		return fsq.getItems();
+		List<Statement> res = fsq.getItems();
+		res.addAll(static_concern);
+		return res;
 	}
 	
 	public List<IBinding> GetConcernedBindings()
