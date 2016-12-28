@@ -10,19 +10,19 @@ import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.jdt.core.dom.ASTNode;
-import org.eclipse.jdt.core.dom.Assignment;
 import org.eclipse.jdt.core.dom.FieldAccess;
 import org.eclipse.jdt.core.dom.IBinding;
 import org.eclipse.jdt.core.dom.MethodInvocation;
+import org.eclipse.jdt.core.dom.QualifiedName;
 import org.eclipse.jdt.core.dom.SimpleName;
 import org.eclipse.jdt.core.dom.Statement;
 import org.eclipse.jdt.core.dom.TryStatement;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
 
-import cn.yyx.research.slice_visitor.util.SlicedCodeGenerator;
 import cn.yyx.research.slice_visitor.util.AvoidStatement;
 import cn.yyx.research.slice_visitor.util.Dependency;
+import cn.yyx.research.slice_visitor.util.SlicedCodeGenerator;
 
 public class DepenencyVisitor extends BaseVisitor {
 	
@@ -155,7 +155,8 @@ public class DepenencyVisitor extends BaseVisitor {
 			ASTNode pp = node;
 			while (pp != null && !(pp instanceof Statement))
 			{
-				if (pp instanceof MethodInvocation || (pp instanceof FieldAccess && pp.getParent() instanceof Assignment))
+				// System.out.println("pp:" + pp + ";type:" + pp.getClass());
+				if (pp instanceof MethodInvocation || pp instanceof QualifiedName || pp instanceof FieldAccess)
 				{
 					// if (pp.toString().startsWith(classname+"."))
 					// {
@@ -166,7 +167,6 @@ public class DepenencyVisitor extends BaseVisitor {
 				pp = pp.getParent();
 			}
 		}
-		// TODO
 		if (ib != null) {
 			Dependency depd = ibindings_dependencies.get(ib);
 			if (depd == null) {
