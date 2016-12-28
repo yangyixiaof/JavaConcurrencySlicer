@@ -149,23 +149,24 @@ public class DepenencyVisitor extends BaseVisitor {
 	public boolean visit(SimpleName node) {
 		IBinding ib = node.resolveBinding();
 		// System.err.println("name:" + node + ";bind:" + ib);
-		String nodename = node.toString();
-		if (ib == null && nodename.equals(classname))
+		// String nodename = node.toString();
+		if (ib == null) //  && nodename.equals(classname)
 		{
 			ASTNode pp = node;
 			while (pp != null && !(pp instanceof Statement))
 			{
 				if (pp instanceof MethodInvocation || (pp instanceof FieldAccess && pp.getParent() instanceof Assignment))
 				{
-					if (pp.toString().startsWith(classname+"."))
-					{
+					// if (pp.toString().startsWith(classname+"."))
+					// {
 						lazy_dependency.AddStatement(FindMostCloseAncestorStatement(node));
 						break;
-					}
+					// }
 				}
 				pp = pp.getParent();
 			}
 		}
+		// TODO
 		if (ib != null) {
 			Dependency depd = ibindings_dependencies.get(ib);
 			if (depd == null) {
