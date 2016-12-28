@@ -24,7 +24,7 @@ public class Stack_ESTest extends Stack_ESTest_scaffolding {
 
 	@Test(timeout = 4000)
 	public void test0() throws Throwable {
-		Stack<Object> stack0 = new Stack<Object>();
+		/*Stack<Object> stack0 = new Stack<Object>();
 		PrivateAccess.setVariable((Class<Stack>) Stack.class, (Stack) stack0, "pointer", (Object) (-99));
 		stack0.isEmpty();
 		// Undeclared exception!
@@ -37,13 +37,13 @@ public class Stack_ESTest extends Stack_ESTest_scaffolding {
 			// no message in exception (getMessage() returned null)
 			//
 			verifyException("tutorial.Stack", e);
-		}
+		}*/
 		Stack<Object> stack1 = new Stack<Object>();
 		stack1.push(".TFa");
 		stack1.push(".TFa");
 	}
 
-	@Test(timeout = 4000)
+	/*@Test(timeout = 4000)
 	public void test1() throws Throwable {
 		Stack<String> stack0 = new Stack<String>();
 		Stack<Object> stack1 = new Stack<Object>();
@@ -182,5 +182,5 @@ public class Stack_ESTest extends Stack_ESTest_scaffolding {
 			//
 			verifyException("tutorial.Stack", e);
 		}
-	}
+	}*/
 }

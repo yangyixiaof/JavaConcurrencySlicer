@@ -10,7 +10,10 @@ import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.Assignment;
+import org.eclipse.jdt.core.dom.FieldAccess;
 import org.eclipse.jdt.core.dom.IBinding;
+import org.eclipse.jdt.core.dom.MethodInvocation;
 import org.eclipse.jdt.core.dom.SimpleName;
 import org.eclipse.jdt.core.dom.Statement;
 import org.eclipse.jdt.core.dom.TryStatement;
@@ -29,6 +32,8 @@ public class DepenencyVisitor extends BaseVisitor {
 	final Map<Statement, Integer> statements_order;
 	Map<Statement, Dependency> concerned_dependencies = new HashMap<Statement, Dependency>();
 	Map<IBinding, Dependency> ibindings_dependencies = new HashMap<IBinding, Dependency>();
+	
+	Dependency lazy_dependency = new Dependency();
 	
 	boolean concern_signal = false;
 	Set<IBinding> concern_bindings = new HashSet<IBinding>();
@@ -143,6 +148,24 @@ public class DepenencyVisitor extends BaseVisitor {
 	@Override
 	public boolean visit(SimpleName node) {
 		IBinding ib = node.resolveBinding();
+		// System.err.println("name:" + node + ";bind:" + ib);
+		String nodename = node.toString();
+		if (ib == null && nodename.equals(classname))
+		{
+			ASTNode pp = node;
+			while (pp != null && !(pp instanceof Statement))
+			{
+				if (pp instanceof MethodInvocation || (pp instanceof FieldAccess && pp.getParent() instanceof Assignment))
+				{
+					if (pp.toString().startsWith(classname+"."))
+					{
+						lazy_dependency.AddStatement(FindMostCloseAncestorStatement(node));
+						break;
+					}
+				}
+				pp = pp.getParent();
+			}
+		}
 		if (ib != null) {
 			Dependency depd = ibindings_dependencies.get(ib);
 			if (depd == null) {
@@ -252,7 +275,7 @@ public class DepenencyVisitor extends BaseVisitor {
 				System.err.println("What the fuck! IBinding is null?" + " Wrong code is:" + node);
 				System.exit(1);
 			}
-			ibindings_dependencies.put(ib, new Dependency());
+			ibindings_dependencies.put(ib, new Dependency(lazy_dependency));
 		}
 		return super.visit(node);
 	}	
