@@ -16,7 +16,6 @@ public class airlinetickets_Airlinetickets_TestCase12 {
                     String[] stringArray0=new String[2];
                     stringArray0[0]="XY@}8X}t*UEVm+zVF1";
                     stringArray0[1]="[(>BV nnW;HRFS8J%]w";
-                    airlinetickets0.Num_of_tickets_issued=(-295);
                     Airlinetickets.main(stringArray0);
                 } catch (Exception e) {
                 }
