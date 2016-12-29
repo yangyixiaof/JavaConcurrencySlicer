@@ -1,12 +1,17 @@
 package cn.yyx.research.slice_visitor;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.eclipse.jdt.core.dom.Assignment;
 import org.eclipse.jdt.core.dom.Expression;
 import org.eclipse.jdt.core.dom.IBinding;
 import org.eclipse.jdt.core.dom.MethodInvocation;
+import org.eclipse.jdt.core.dom.SimpleName;
 import org.eclipse.jdt.core.dom.Statement;
+import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
+import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
 
 import cn.yyx.research.slice_visitor.util.FixedSizeQueue;
 
@@ -20,6 +25,38 @@ public class LastNMethodsVisitor extends BaseVisitor {
 		super(classname);
 		this.n = n;
 		fsq = new FixedSizeQueue<IBinding, Statement>(n);
+	}
+	
+	@Override
+	public boolean visit(Assignment node) {
+		Expression expr = node.getLeftHandSide();
+		if (IsConcerned(expr))
+		{
+			Statement stat = FindMostCloseAncestorStatement(node);
+			fsq.AddOneItem(GetBinding(expr), stat);
+		}
+		return super.visit(node);
+	}
+	
+	@Override
+	public boolean visit(VariableDeclarationStatement node) {
+		boolean result = super.visit(node);
+		
+		@SuppressWarnings("unchecked")
+		List<VariableDeclarationFragment> frags = node.fragments();
+		Iterator<VariableDeclarationFragment> fitr = frags.iterator();
+		while (fitr.hasNext())
+		{
+			VariableDeclarationFragment vdf = fitr.next();
+			SimpleName expr = vdf.getName();
+			if (IsConcerned(expr) && !vdf.getInitializer().toString().equals("null"))
+			{
+				Statement stat = FindMostCloseAncestorStatement(node);
+				fsq.AddOneItem(GetBinding(expr), stat);
+			}
+		}
+		
+		return result;
 	}
 	
 	@Override

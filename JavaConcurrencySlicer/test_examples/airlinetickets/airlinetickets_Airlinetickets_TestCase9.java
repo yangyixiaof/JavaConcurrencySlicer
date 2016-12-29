@@ -12,8 +12,8 @@ public class airlinetickets_Airlinetickets_TestCase9 {
             @Override
             public void run() {
                 try {
-                    Airlinetickets airlinetickets0=new Airlinetickets("","");
-                    airlinetickets0.checkResult("",(String)null);
+                    String[] stringArray0=new String[10];
+                    Airlinetickets.main(stringArray0);
                 } catch (Exception e) {
                 }
             }
@@ -22,16 +22,26 @@ public class airlinetickets_Airlinetickets_TestCase9 {
             @Override
             public void run() {
                 try {
-                    String[] stringArray0=new String[10];
-                    Airlinetickets.main(stringArray0);
+                    Airlinetickets airlinetickets0=new Airlinetickets("","");
+                } catch (Exception e) {
+                }
+            }
+        });
+        Thread t3 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    airlinetickets0.checkResult("",(String)null);
                 } catch (Exception e) {
                 }
             }
         });
         t1.start();
         t2.start();
+        t3.start();
         t1.join();
         t2.join();
+        t3.join();
     }
 
 }

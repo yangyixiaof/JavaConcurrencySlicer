@@ -13,7 +13,7 @@ public class airlinetickets_Airlinetickets_TestCase5 {
             @Override
             public void run() {
                 try {
-                    airlinetickets0.go("");
+                    airlinetickets0.run();
                 } catch (Exception e) {
                 }
             }
@@ -22,7 +22,7 @@ public class airlinetickets_Airlinetickets_TestCase5 {
             @Override
             public void run() {
                 try {
-                    airlinetickets0.run();
+                    airlinetickets0.go("");
                 } catch (Exception e) {
                 }
             }

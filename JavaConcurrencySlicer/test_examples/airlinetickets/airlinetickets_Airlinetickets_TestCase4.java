@@ -13,7 +13,7 @@ public class airlinetickets_Airlinetickets_TestCase4 {
             @Override
             public void run() {
                 try {
-                    airlinetickets0.checkResult("The airline issued ",(String)null);
+                    airlinetickets0.run();
                 } catch (Exception e) {
                 }
             }
@@ -22,7 +22,7 @@ public class airlinetickets_Airlinetickets_TestCase4 {
             @Override
             public void run() {
                 try {
-                    airlinetickets0.run();
+                    airlinetickets0.checkResult("The airline issued ",(String)null);
                 } catch (Exception e) {
                 }
             }
