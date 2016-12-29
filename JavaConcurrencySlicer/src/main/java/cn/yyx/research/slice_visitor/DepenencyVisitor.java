@@ -172,7 +172,7 @@ public class DepenencyVisitor extends BaseVisitor {
 			if (depd == null) {
 				// System.err.println("Warning no binding:" + node + "; must check it is not a variable.");
 			} else {
-				if (concern_signal) {
+				if (!signal && concern_signal) {
 					Iterator<IBinding> citr = concern_bindings.iterator();
 					while (citr.hasNext())
 					{
@@ -210,7 +210,8 @@ public class DepenencyVisitor extends BaseVisitor {
 			if (cbv.IsConcernedStatement())
 			{
 				concern_signal = true;
-				concern_bindings = cbv.GetConcernedBindings();
+				concern_bindings.clear();
+				concern_bindings.addAll(cbv.GetConcernedBindings());
 			}
 			
 			// original logic.
