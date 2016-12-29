@@ -10,10 +10,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.jdt.core.dom.ASTNode;
-import org.eclipse.jdt.core.dom.FieldAccess;
 import org.eclipse.jdt.core.dom.IBinding;
-import org.eclipse.jdt.core.dom.MethodInvocation;
-import org.eclipse.jdt.core.dom.QualifiedName;
 import org.eclipse.jdt.core.dom.SimpleName;
 import org.eclipse.jdt.core.dom.Statement;
 import org.eclipse.jdt.core.dom.TryStatement;
@@ -39,6 +36,8 @@ public class DepenencyVisitor extends BaseVisitor {
 	Set<IBinding> concern_bindings = new HashSet<IBinding>();
 	boolean signal = false;
 	Statement cared_statement = null;
+	
+	boolean statement_handled = false;
 	
 	public DepenencyVisitor(List<IBinding> cbinds, List<Statement> lastnms, Map<Statement, Integer> sorder, String classname) {
 		super(classname);
@@ -148,26 +147,34 @@ public class DepenencyVisitor extends BaseVisitor {
 	@Override
 	public boolean visit(SimpleName node) {
 		IBinding ib = node.resolveBinding();
-		// System.err.println("name:" + node + ";bind:" + ib);
-		// String nodename = node.toString();
-		if (ib == null && !signal) //  && nodename.equals(classname)
-		{
-			ASTNode pp = node;
-			while (pp != null && !(pp instanceof Statement))
-			{
-				// System.out.println("pp:" + pp + ";type:" + pp.getClass());
-				if (pp instanceof MethodInvocation || pp instanceof QualifiedName || pp instanceof FieldAccess)
-				{
-					// if (pp.toString().startsWith(classname+"."))
-					{
-						lazy_dependency.AddStatement(FindMostCloseAncestorStatement(node));
-						break;
-					}
-				}
-				pp = pp.getParent();
-			}
-		}
+//		System.err.println("name:" + node + ";bind:" + ib);
+//		String nodename = node.toString();
+		// TODO
+//		if (ib == null && !signal) //  && nodename.equals(classname)
+//		{
+//			System.err.println("unresolved binding node:" + node + ";parent:" + node.getParent());
+//			ASTNode pp = node;
+//			while (pp != null && !(pp instanceof Statement))
+//			{
+//				System.out.println("pp:" + pp + ";type:" + pp.getClass());
+//				if (pp instanceof MethodInvocation || pp instanceof QualifiedName || pp instanceof FieldAccess)
+//				{
+//					if (pp.toString().startsWith(classname+"."))
+//					{
+//						lazy_dependency.AddStatement(FindMostCloseAncestorStatement(node));
+//						break;
+//					}
+//				}
+//				pp = pp.getParent();
+//			}
+//			if (pp != null && (pp.toString().startsWith(classname+".") || Character.isUpperCase(pp.toString().charAt(0))))
+//			{
+//				lazy_dependency.AddStatement(FindMostCloseAncestorStatement(node));
+//			}
+//		}
 		if (ib != null) {
+//			System.err.println("resolved binding:"+ib+";node:"+node+";parent:"+node.getParent());
+			statement_handled = true;
 			Dependency depd = ibindings_dependencies.get(ib);
 			if (depd == null) {
 				// System.err.println("Warning no binding:" + node + "; must check it is not a variable.");
@@ -201,6 +208,7 @@ public class DepenencyVisitor extends BaseVisitor {
 	public boolean preVisit2(ASTNode node) {
 		if (node instanceof Statement && !(node instanceof TryStatement))
 		{
+			statement_handled = false;
 			if (AvoidStatement.IsAvoided(node))
 			{
 				return false;
@@ -259,6 +267,11 @@ public class DepenencyVisitor extends BaseVisitor {
 				signal = false;
 				concerned++;
 				cared_statement = null;
+			}
+			if (!statement_handled)
+			{
+				// TODO
+				lazy_dependency.AddStatement(FindMostCloseAncestorStatement(node));
 			}
 		}
 		super.postVisit(node);
