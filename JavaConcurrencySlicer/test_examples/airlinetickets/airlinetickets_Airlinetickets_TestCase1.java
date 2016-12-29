@@ -12,9 +12,8 @@ public class airlinetickets_Airlinetickets_TestCase1 {
             @Override
             public void run() {
                 try {
-                    String[] stringArray0=new String[9];
+                    Airlinetickets airlinetickets0=new Airlinetickets("V';`W","");
                     airlinetickets0.checkResult("","No Bug");
-                    Airlinetickets.main(stringArray0);
                 } catch (Exception e) {
                 }
             }
@@ -23,8 +22,9 @@ public class airlinetickets_Airlinetickets_TestCase1 {
             @Override
             public void run() {
                 try {
-                    Airlinetickets airlinetickets0=new Airlinetickets("V';`W","");
+                    String[] stringArray0=new String[9];
                     airlinetickets0.checkResult("","No Bug");
+                    Airlinetickets.main(stringArray0);
                 } catch (Exception e) {
                 }
             }
