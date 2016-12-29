@@ -13,7 +13,6 @@ public class airlinetickets_Airlinetickets_TestCase9 {
             public void run() {
                 try {
                     String[] stringArray0=new String[9];
-                    airlinetickets0.go("s");
                     Airlinetickets.main(stringArray0);
                 } catch (Exception e) {
                 }

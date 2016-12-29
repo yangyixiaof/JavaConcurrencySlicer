@@ -23,7 +23,6 @@ public class airlinetickets_Airlinetickets_TestCase3 {
             public void run() {
                 try {
                     airlinetickets0.run();
-                    airlinetickets0.run();
                 } catch (Exception e) {
                 }
             }

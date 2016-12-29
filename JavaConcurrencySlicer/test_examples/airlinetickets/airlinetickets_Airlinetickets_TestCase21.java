@@ -8,7 +8,6 @@ public class airlinetickets_Airlinetickets_TestCase21 {
 
     public static void main(String[] args) throws Exception {
         Airlinetickets.Num_Of_Seats_Sold=(-1875);
-        Airlinetickets.main(stringArray0);
         final Airlinetickets airlinetickets0=new Airlinetickets("V';`W","");
         airlinetickets0.Maximum_Capacity=(-1915801992);
         Thread t1 = new Thread(new Runnable() {
@@ -24,7 +23,6 @@ public class airlinetickets_Airlinetickets_TestCase21 {
             @Override
             public void run() {
                 try {
-                    airlinetickets0.run();
                     airlinetickets0.go(" Seats !!!");
                 } catch (Exception e) {
                 }
@@ -35,6 +33,7 @@ public class airlinetickets_Airlinetickets_TestCase21 {
             public void run() {
                 try {
                     String[] stringArray0=new String[9];
+                    Airlinetickets.main(stringArray0);
                 } catch (Exception e) {
                 }
             }

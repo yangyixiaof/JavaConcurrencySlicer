@@ -13,7 +13,6 @@ public class airlinetickets_Airlinetickets_TestCase13 {
             @Override
             public void run() {
                 try {
-                    airlinetickets0.checkResult("","No Bug");
                     airlinetickets0.go("s");
                 } catch (Exception e) {
                 }

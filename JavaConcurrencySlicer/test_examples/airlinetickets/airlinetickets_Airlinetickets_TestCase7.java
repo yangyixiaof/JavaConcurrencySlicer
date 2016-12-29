@@ -12,7 +12,6 @@ public class airlinetickets_Airlinetickets_TestCase7 {
             @Override
             public void run() {
                 try {
-                    Airlinetickets.main(stringArray0);
                     Airlinetickets airlinetickets0=new Airlinetickets("V';`W","");
                     airlinetickets0.checkResult("","No Bug");
                 } catch (Exception e) {

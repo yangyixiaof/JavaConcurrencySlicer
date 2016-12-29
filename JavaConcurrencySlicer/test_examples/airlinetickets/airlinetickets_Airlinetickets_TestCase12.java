@@ -23,7 +23,6 @@ public class airlinetickets_Airlinetickets_TestCase12 {
             public void run() {
                 try {
                     String[] stringArray0=new String[9];
-                    airlinetickets0.checkResult("","No Bug");
                     Airlinetickets.main(stringArray0);
                 } catch (Exception e) {
                 }

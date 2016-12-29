@@ -13,7 +13,6 @@ public class airlinetickets_Airlinetickets_TestCase11 {
             @Override
             public void run() {
                 try {
-                    airlinetickets0.checkResult("]{[Dhv!peo'","'|0]#fvt");
                     airlinetickets0.run();
                 } catch (Exception e) {
                 }

@@ -14,7 +14,6 @@ public class airlinetickets_Airlinetickets_TestCase6 {
             public void run() {
                 try {
                     Airlinetickets.main(stringArray0);
-                    Airlinetickets.main(stringArray0);
                 } catch (Exception e) {
                 }
             }

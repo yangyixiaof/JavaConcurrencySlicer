@@ -22,7 +22,6 @@ public class airlinetickets_Airlinetickets_TestCase20 {
             @Override
             public void run() {
                 try {
-                    airlinetickets0.checkResult("","No Bug");
                     airlinetickets0.checkResult("sxO&&p|","");
                 } catch (Exception e) {
                 }
