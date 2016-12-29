@@ -25,7 +25,7 @@ public class Airlinetickets_ESTest extends Airlinetickets_ESTest_scaffolding {
       Airlinetickets.main(stringArray0);
   }
 
-  /*@Test(timeout = 4000)
+  @Test(timeout = 4000)
   public void test01()  throws Throwable  {
       String[] stringArray0 = new String[1];
       // Undeclared exception!
@@ -278,5 +278,5 @@ public class Airlinetickets_ESTest extends Airlinetickets_ESTest_scaffolding {
          //
          verifyException("org.evosuite.runtime.System", e);
       }
-  }*/
+  }
 }

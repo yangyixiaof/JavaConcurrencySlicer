@@ -30,7 +30,7 @@ public class LastNMethodsVisitor extends BaseVisitor {
 			Statement stat = FindMostCloseAncestorStatement(node);
 			fsq.AddOneItem(GetBinding(expr), stat);
 		}
-		if (expr.toString().equals(classname))
+		if (expr != null && expr.toString().equals(classname))
 		{
 			Statement stat = FindMostCloseAncestorStatement(node);
 			if (!static_concern.contains(stat))
