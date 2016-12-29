@@ -17,7 +17,7 @@ import org.junit.runner.RunWith;
 @RunWith(EvoRunner.class) @EvoRunnerParameters(mockJVMNonDeterminism = true, useVFS = true, useVNET = true, resetStaticState = true, useJEE = true) 
 public class Airlinetickets_ESTest extends Airlinetickets_ESTest_scaffolding {
 
-  /*@Test(timeout = 4000)
+  @Test(timeout = 4000)
   public void test00()  throws Throwable  {
       Airlinetickets.Num_Of_Seats_Sold = (-3410);
       System.setCurrentTimeMillis(0);
@@ -112,7 +112,7 @@ public class Airlinetickets_ESTest extends Airlinetickets_ESTest_scaffolding {
       Airlinetickets airlinetickets0 = new Airlinetickets("V';`W", "");
       airlinetickets0.checkResult("]{[Dhv!peo'", "'|0]#fvt");
       airlinetickets0.run();
-  }*/
+  }
 
   @Test(timeout = 4000)
   public void test11()  throws Throwable  {
@@ -123,15 +123,15 @@ public class Airlinetickets_ESTest extends Airlinetickets_ESTest_scaffolding {
       Airlinetickets.main(stringArray0);
   }
 
-  /*@Test(timeout = 4000)
+  @Test(timeout = 4000)
   public void test12()  throws Throwable  {
       Airlinetickets.Num_Of_Seats_Sold = (-1862);
       Airlinetickets airlinetickets0 = new Airlinetickets("V';`W", "");
       airlinetickets0.checkResult("", "No Bug");
       airlinetickets0.go("s");
-  }*/
+  }
 
-  /*@Test(timeout = 4000)
+  @Test(timeout = 4000)
   public void test13()  throws Throwable  {
       Airlinetickets airlinetickets0 = null;
       try {
@@ -278,5 +278,5 @@ public class Airlinetickets_ESTest extends Airlinetickets_ESTest_scaffolding {
          //
          verifyException("org.evosuite.runtime.System", e);
       }
-  }*/
+  }
 }

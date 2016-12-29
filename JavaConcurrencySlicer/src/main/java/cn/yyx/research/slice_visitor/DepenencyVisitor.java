@@ -150,7 +150,7 @@ public class DepenencyVisitor extends BaseVisitor {
 		IBinding ib = node.resolveBinding();
 		// System.err.println("name:" + node + ";bind:" + ib);
 		// String nodename = node.toString();
-		if (ib == null) //  && nodename.equals(classname)
+		if (ib == null && !signal) //  && nodename.equals(classname)
 		{
 			ASTNode pp = node;
 			while (pp != null && !(pp instanceof Statement))
@@ -159,10 +159,10 @@ public class DepenencyVisitor extends BaseVisitor {
 				if (pp instanceof MethodInvocation || pp instanceof QualifiedName || pp instanceof FieldAccess)
 				{
 					// if (pp.toString().startsWith(classname+"."))
-					// {
+					{
 						lazy_dependency.AddStatement(FindMostCloseAncestorStatement(node));
 						break;
-					// }
+					}
 				}
 				pp = pp.getParent();
 			}
@@ -225,6 +225,7 @@ public class DepenencyVisitor extends BaseVisitor {
 					if (idx == concerned) {
 						signal = true;
 						cared_statement = (Statement) node;
+						// System.err.println("cared_statement:"+cared_statement+";lazy_dependency:"+lazy_dependency);
 						concerned_dependencies.put(cared_statement, new Dependency(lazy_dependency));
 					} else {
 						System.err.println("What the fuck? skip some concerned statements?");

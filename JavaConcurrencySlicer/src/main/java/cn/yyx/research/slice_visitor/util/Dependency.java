@@ -84,4 +84,9 @@ public class Dependency {
 		return result;
 	}
 	
+	@Override
+	public String toString() {
+		return statements.toString();
+	}
+	
 }
