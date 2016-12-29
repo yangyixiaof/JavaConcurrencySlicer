@@ -11,10 +11,10 @@ public class airlinetickets_Airlinetickets_TestCase16 {
             @Override
             public void run() {
                 try {
-                    Airlinetickets.Num_Of_Seats_Sold=(-1862);
-                    Airlinetickets airlinetickets0=new Airlinetickets("V';`W","");
-                    Airlinetickets.Num_of_tickets_issued=(-1862);
-                    airlinetickets0.go("");
+                    Airlinetickets.Num_Of_Seats_Sold=(-1720705875);
+                    Airlinetickets airlinetickets0=new Airlinetickets("","");
+                    airlinetickets0.Maximum_Capacity=(-1720705875);
+                    airlinetickets0.checkResult("","x[d#Qw^BoRX[");
                 } catch (Exception e) {
                 }
             }

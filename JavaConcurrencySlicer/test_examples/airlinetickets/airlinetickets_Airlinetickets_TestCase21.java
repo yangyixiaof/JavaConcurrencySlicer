@@ -7,14 +7,15 @@ import airlinetickets.Airlinetickets;
 public class airlinetickets_Airlinetickets_TestCase21 {
 
     public static void main(String[] args) throws Exception {
-        Airlinetickets.Num_Of_Seats_Sold=(-1875);
-        final Airlinetickets airlinetickets0=new Airlinetickets("V';`W","");
-        airlinetickets0.Maximum_Capacity=(-1915801992);
+        Airlinetickets.Num_Of_Seats_Sold=(-177);
+        final Airlinetickets airlinetickets0=new Airlinetickets("","< ");
+        airlinetickets0.Maximum_Capacity=(-68);
         Thread t1 = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    airlinetickets0.run();
+                    String[] stringArray0=new String[5];
+                    Airlinetickets.main(stringArray0);
                 } catch (Exception e) {
                 }
             }
@@ -23,7 +24,7 @@ public class airlinetickets_Airlinetickets_TestCase21 {
             @Override
             public void run() {
                 try {
-                    airlinetickets0.go(" Seats !!!");
+                    airlinetickets0.go("");
                 } catch (Exception e) {
                 }
             }
@@ -32,8 +33,7 @@ public class airlinetickets_Airlinetickets_TestCase21 {
             @Override
             public void run() {
                 try {
-                    String[] stringArray0=new String[9];
-                    Airlinetickets.main(stringArray0);
+                    airlinetickets0.run();
                 } catch (Exception e) {
                 }
             }

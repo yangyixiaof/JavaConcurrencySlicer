@@ -7,13 +7,13 @@ import airlinetickets.Airlinetickets;
 public class airlinetickets_Airlinetickets_TestCase9 {
 
     public static void main(String[] args) throws Exception {
-        Airlinetickets.Num_Of_Seats_Sold=(-1862);
+        Airlinetickets.Num_Of_Seats_Sold=(-2679);
         Thread t1 = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    String[] stringArray0=new String[9];
-                    Airlinetickets.main(stringArray0);
+                    Airlinetickets airlinetickets0=new Airlinetickets("","");
+                    airlinetickets0.checkResult("",(String)null);
                 } catch (Exception e) {
                 }
             }
@@ -22,8 +22,8 @@ public class airlinetickets_Airlinetickets_TestCase9 {
             @Override
             public void run() {
                 try {
-                    Airlinetickets airlinetickets0=new Airlinetickets("V';`W","");
-                    airlinetickets0.go("s");
+                    String[] stringArray0=new String[10];
+                    Airlinetickets.main(stringArray0);
                 } catch (Exception e) {
                 }
             }

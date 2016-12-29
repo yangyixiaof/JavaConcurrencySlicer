@@ -11,8 +11,7 @@ public class airlinetickets_Airlinetickets_TestCase1 {
             @Override
             public void run() {
                 try {
-                    Airlinetickets.Num_Of_Seats_Sold=(-3410);
-                    String[] stringArray0=new String[3];
+                    String[] stringArray0=new String[0];
                     Airlinetickets.main(stringArray0);
                 } catch (Exception e) {
                 }
