@@ -38,26 +38,26 @@ public class LastNMethodsVisitor extends BaseVisitor {
 		return super.visit(node);
 	}
 	
-	@Override
-	public boolean visit(VariableDeclarationStatement node) {
-		boolean result = super.visit(node);
-		
-		@SuppressWarnings("unchecked")
-		List<VariableDeclarationFragment> frags = node.fragments();
-		Iterator<VariableDeclarationFragment> fitr = frags.iterator();
-		while (fitr.hasNext())
-		{
-			VariableDeclarationFragment vdf = fitr.next();
-			SimpleName expr = vdf.getName();
-			if (IsConcerned(expr) && !vdf.getInitializer().toString().equals("null"))
-			{
-				Statement stat = FindMostCloseAncestorStatement(node);
-				fsq.AddOneItem(GetBinding(expr), stat);
-			}
-		}
-		
-		return result;
-	}
+//	@Override
+//	public boolean visit(VariableDeclarationStatement node) {
+//		boolean result = super.visit(node);
+//		
+//		@SuppressWarnings("unchecked")
+//		List<VariableDeclarationFragment> frags = node.fragments();
+//		Iterator<VariableDeclarationFragment> fitr = frags.iterator();
+//		while (fitr.hasNext())
+//		{
+//			VariableDeclarationFragment vdf = fitr.next();
+//			SimpleName expr = vdf.getName();
+//			if (IsConcerned(expr) && !vdf.getInitializer().toString().equals("null"))
+//			{
+//				Statement stat = FindMostCloseAncestorStatement(node);
+//				fsq.AddOneItem(GetBinding(expr), stat);
+//			}
+//		}
+//		
+//		return result;
+//	}
 	
 	@Override
 	public boolean visit(MethodInvocation node) {

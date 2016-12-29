@@ -26,14 +26,6 @@ public class airlinetickets_Airlinetickets_TestCase2 {
             public void run() {
                 try {
                     Airlinetickets airlinetickets0=new Airlinetickets("XY@}8X}t*UEVm+zVF1","XY@}8X}t*UEVm+zVF1");
-                } catch (Exception e) {
-                }
-            }
-        });
-        Thread t3 = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
                     airlinetickets0.Maximum_Capacity=(-195);
                     airlinetickets0.checkResult("XY@}8X}t*UEVm+zVF1","+o,Kk");
                 } catch (Exception e) {
@@ -42,10 +34,8 @@ public class airlinetickets_Airlinetickets_TestCase2 {
         });
         t1.start();
         t2.start();
-        t3.start();
         t1.join();
         t2.join();
-        t3.join();
     }
 
 }

@@ -13,20 +13,12 @@ public class airlinetickets_Airlinetickets_TestCase6 {
             public void run() {
                 try {
                     Airlinetickets airlinetickets0=new Airlinetickets("","");
-                } catch (Exception e) {
-                }
-            }
-        });
-        Thread t2 = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
                     airlinetickets0.go("");
                 } catch (Exception e) {
                 }
             }
         });
-        Thread t3 = new Thread(new Runnable() {
+        Thread t2 = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
@@ -38,10 +30,8 @@ public class airlinetickets_Airlinetickets_TestCase6 {
         });
         t1.start();
         t2.start();
-        t3.start();
         t1.join();
         t2.join();
-        t3.join();
     }
 
 }

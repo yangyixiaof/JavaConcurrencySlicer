@@ -13,8 +13,7 @@ public class airlinetickets_Airlinetickets_TestCase8 {
             @Override
             public void run() {
                 try {
-                    String[] stringArray0=new String[5];
-                    airlinetickets0.checkResult(stringArray0[1],"j1GH!M");
+                    airlinetickets0.run();
                 } catch (Exception e) {
                 }
             }
@@ -23,7 +22,8 @@ public class airlinetickets_Airlinetickets_TestCase8 {
             @Override
             public void run() {
                 try {
-                    airlinetickets0.run();
+                    String[] stringArray0=new String[5];
+                    airlinetickets0.checkResult(stringArray0[1],"j1GH!M");
                 } catch (Exception e) {
                 }
             }

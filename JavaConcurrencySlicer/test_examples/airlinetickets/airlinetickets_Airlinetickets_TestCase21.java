@@ -14,7 +14,8 @@ public class airlinetickets_Airlinetickets_TestCase21 {
             @Override
             public void run() {
                 try {
-                    airlinetickets0.run();
+                    String[] stringArray0=new String[5];
+                    Airlinetickets.main(stringArray0);
                 } catch (Exception e) {
                 }
             }
@@ -32,8 +33,7 @@ public class airlinetickets_Airlinetickets_TestCase21 {
             @Override
             public void run() {
                 try {
-                    String[] stringArray0=new String[5];
-                    Airlinetickets.main(stringArray0);
+                    airlinetickets0.run();
                 } catch (Exception e) {
                 }
             }
