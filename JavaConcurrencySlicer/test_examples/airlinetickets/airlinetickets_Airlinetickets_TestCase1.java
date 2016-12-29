@@ -12,7 +12,6 @@ public class airlinetickets_Airlinetickets_TestCase1 {
             public void run() {
                 try {
                     Airlinetickets.Num_Of_Seats_Sold=(-3410);
-                    System.setCurrentTimeMillis(0);
                     String[] stringArray0=new String[3];
                     Airlinetickets.main(stringArray0);
                 } catch (Exception e) {

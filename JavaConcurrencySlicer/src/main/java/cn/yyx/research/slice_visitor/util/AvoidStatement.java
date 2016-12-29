@@ -14,6 +14,10 @@ public class AvoidStatement {
 		{
 			return true;
 		}
+		if (node.toString().trim().startsWith("System."))
+		{
+			return true;
+		}
 		return false;
 	}
 	
