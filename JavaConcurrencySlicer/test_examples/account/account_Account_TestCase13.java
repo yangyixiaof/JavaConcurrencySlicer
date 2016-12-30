@@ -9,12 +9,13 @@ import account.BankAccount;
 public class account_Account_TestCase13 {
 
     public static void main(String[] args) throws Exception {
-        final Account account0=new Account();
-        final String[] stringArray0=new String[7];
+        Account.Service(0,0);
         Thread t1 = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
+                    Account account0=new Account();
+                    String[] stringArray0=new String[3];
                     account0.go(stringArray0);
                 } catch (Exception e) {
                 }
@@ -24,7 +25,7 @@ public class account_Account_TestCase13 {
             @Override
             public void run() {
                 try {
-                    account0.go(stringArray0);
+                    Account.Service(0,0);
                 } catch (Exception e) {
                 }
             }
@@ -33,16 +34,7 @@ public class account_Account_TestCase13 {
             @Override
             public void run() {
                 try {
-                    Account.Service(0,0);
-                } catch (Exception e) {
-                }
-            }
-        });
-        Thread t4 = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Account.Service(0,0);
+                    Account.Service(0,(-2221));
                 } catch (Exception e) {
                 }
             }
@@ -50,11 +42,9 @@ public class account_Account_TestCase13 {
         t1.start();
         t2.start();
         t3.start();
-        t4.start();
         t1.join();
         t2.join();
         t3.join();
-        t4.join();
     }
 
 }

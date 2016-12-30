@@ -10,11 +10,14 @@ public class account_Account_TestCase12 {
 
     public static void main(String[] args) throws Exception {
         final Account account0=new Account();
+        BankAccount[] bankAccountArray0=new BankAccount[5];
+        bankAccountArray0[2]=bankAccount0;
+        account0.accounts=bankAccountArray0;
         Thread t1 = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    account0.checkResult(0);
+                    account0.checkResult((-4264));
                 } catch (Exception e) {
                 }
             }
@@ -23,7 +26,7 @@ public class account_Account_TestCase12 {
             @Override
             public void run() {
                 try {
-                    Account.Service(0,0);
+                    account0.checkResult(3549);
                 } catch (Exception e) {
                 }
             }
@@ -32,7 +35,7 @@ public class account_Account_TestCase12 {
             @Override
             public void run() {
                 try {
-                    account0.checkResult(0);
+                    Account.Service(2,(-4264));
                 } catch (Exception e) {
                 }
             }

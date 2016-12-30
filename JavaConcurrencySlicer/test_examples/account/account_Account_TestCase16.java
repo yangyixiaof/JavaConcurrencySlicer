@@ -14,8 +14,8 @@ public class account_Account_TestCase16 {
             public void run() {
                 try {
                     Account account0=new Account();
-                    String[] stringArray0=new String[2];
-                    account0.Bank_Total=(-26);
+                    account0.NUM_ACCOUNTS=(-1);
+                    String[] stringArray0=new String[6];
                     account0.go(stringArray0);
                 } catch (Exception e) {
                 }

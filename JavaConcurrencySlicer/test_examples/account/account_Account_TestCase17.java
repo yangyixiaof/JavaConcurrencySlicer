@@ -13,16 +13,25 @@ public class account_Account_TestCase17 {
             @Override
             public void run() {
                 try {
-                    Account.Bank_random=null;
                     Account account0=new Account();
-                    String[] stringArray0=new String[7];
-                    account0.go(stringArray0);
+                    account0.checkResult(0);
+                } catch (Exception e) {
+                }
+            }
+        });
+        Thread t2 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Account.Service(0,0);
                 } catch (Exception e) {
                 }
             }
         });
         t1.start();
+        t2.start();
         t1.join();
+        t2.join();
     }
 
 }

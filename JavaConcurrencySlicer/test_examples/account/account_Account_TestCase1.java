@@ -10,12 +10,13 @@ public class account_Account_TestCase1 {
 
     public static void main(String[] args) throws Exception {
         final Account account0=new Account();
-        account0.checkResult(0);
+        final String[] stringArray0=new String[2];
+        account0.go((String[])null);
         Thread t1 = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    account0.checkResult(0);
+                    account0.go(stringArray0);
                 } catch (Exception e) {
                 }
             }
@@ -24,7 +25,6 @@ public class account_Account_TestCase1 {
             @Override
             public void run() {
                 try {
-                    String[] stringArray0=new String[7];
                     account0.go(stringArray0);
                 } catch (Exception e) {
                 }

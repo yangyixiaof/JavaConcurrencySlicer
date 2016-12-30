@@ -15,22 +15,13 @@ public class account_Account_TestCase4 {
             @Override
             public void run() {
                 try {
-                    Account.Service(0,0);
-                } catch (Exception e) {
-                }
-            }
-        });
-        Thread t2 = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    String[] stringArray0=new String[7];
+                    String[] stringArray0=new String[6];
                     account0.go(stringArray0);
                 } catch (Exception e) {
                 }
             }
         });
-        Thread t3 = new Thread(new Runnable() {
+        Thread t2 = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
@@ -41,10 +32,8 @@ public class account_Account_TestCase4 {
         });
         t1.start();
         t2.start();
-        t3.start();
         t1.join();
         t2.join();
-        t3.join();
     }
 
 }
