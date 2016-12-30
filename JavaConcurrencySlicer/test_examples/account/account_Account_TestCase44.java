@@ -12,7 +12,7 @@ public class account_Account_TestCase44 {
             @Override
             public void run() {
                 try {
-                    Account.Service(1,1);
+                    account0.go((String[])null);
                 } catch (Exception e) {
                 }
             }
@@ -21,7 +21,7 @@ public class account_Account_TestCase44 {
             @Override
             public void run() {
                 try {
-                    account0.go((String[])null);
+                    Account.Service(160,160);
                 } catch (Exception e) {
                 }
             }
@@ -39,7 +39,7 @@ public class account_Account_TestCase44 {
             @Override
             public void run() {
                 try {
-                    Account.Service(160,160);
+                    Account.Service(1,1);
                 } catch (Exception e) {
                 }
             }

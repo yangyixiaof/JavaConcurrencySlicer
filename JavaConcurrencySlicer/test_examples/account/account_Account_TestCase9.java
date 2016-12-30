@@ -12,8 +12,7 @@ public class account_Account_TestCase9 {
             @Override
             public void run() {
                 try {
-                    Account account0=new Account();
-                    account0.checkResult(0);
+                    Account.main(stringArray0);
                 } catch (Exception e) {
                 }
             }
@@ -22,7 +21,8 @@ public class account_Account_TestCase9 {
             @Override
             public void run() {
                 try {
-                    Account.main(stringArray0);
+                    Account account0=new Account();
+                    account0.checkResult(0);
                 } catch (Exception e) {
                 }
             }

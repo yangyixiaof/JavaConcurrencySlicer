@@ -22,7 +22,7 @@ public class account_Account_TestCase1 {
             @Override
             public void run() {
                 try {
-                    Account.Service(246,246);
+                    Account.main(stringArray0);
                 } catch (Exception e) {
                 }
             }

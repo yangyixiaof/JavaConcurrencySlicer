@@ -11,8 +11,7 @@ public class account_Account_TestCase40 {
             @Override
             public void run() {
                 try {
-                    String[] stringArray0=new String[0];
-                    Account.main(stringArray0);
+                    Account.Service(246,246);
                 } catch (Exception e) {
                 }
             }
@@ -31,7 +30,8 @@ public class account_Account_TestCase40 {
             @Override
             public void run() {
                 try {
-                    Account.Service(246,246);
+                    String[] stringArray0=new String[0];
+                    Account.main(stringArray0);
                 } catch (Exception e) {
                 }
             }

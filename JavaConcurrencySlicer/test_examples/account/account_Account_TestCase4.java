@@ -7,6 +7,7 @@ import account.Account;
 public class account_Account_TestCase4 {
 
     public static void main(String[] args) throws Exception {
+        final String[] stringArray0=new String[0];
         Account.main(stringArray0);
         Thread t1 = new Thread(new Runnable() {
             @Override
@@ -21,7 +22,6 @@ public class account_Account_TestCase4 {
             @Override
             public void run() {
                 try {
-                    String[] stringArray0=new String[0];
                     Account.main(stringArray0);
                 } catch (Exception e) {
                 }

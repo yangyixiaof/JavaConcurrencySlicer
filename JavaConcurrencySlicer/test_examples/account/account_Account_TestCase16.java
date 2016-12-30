@@ -7,6 +7,7 @@ import account.Account;
 public class account_Account_TestCase16 {
 
     public static void main(String[] args) throws Exception {
+        String[] stringArray0=new String[3];
         Account.main(stringArray0);
         Thread t1 = new Thread(new Runnable() {
             @Override

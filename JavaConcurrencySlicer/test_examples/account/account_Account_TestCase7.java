@@ -13,7 +13,7 @@ public class account_Account_TestCase7 {
             @Override
             public void run() {
                 try {
-                    account0.go(stringArray0);
+                    account0.checkResult(98);
                 } catch (Exception e) {
                 }
             }
@@ -22,7 +22,7 @@ public class account_Account_TestCase7 {
             @Override
             public void run() {
                 try {
-                    Account.main(stringArray0);
+                    account0.go(stringArray0);
                 } catch (Exception e) {
                 }
             }
@@ -31,7 +31,7 @@ public class account_Account_TestCase7 {
             @Override
             public void run() {
                 try {
-                    account0.checkResult(98);
+                    Account.main(stringArray0);
                 } catch (Exception e) {
                 }
             }

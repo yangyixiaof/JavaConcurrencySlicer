@@ -12,7 +12,6 @@ public class account_Account_TestCase45 {
             public void run() {
                 try {
                     String[] stringArray0=new String[9];
-                    account0.Bank_random=null;
                     Account.main(stringArray0);
                 } catch (Exception e) {
                 }
