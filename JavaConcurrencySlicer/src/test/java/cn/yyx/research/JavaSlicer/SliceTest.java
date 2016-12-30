@@ -21,7 +21,7 @@ public class SliceTest
 	}
 	
 	@Test
-	public void testx1()
+	public void testx1() throws Exception
 	{
 		try {
 			Slicer s = new Slicer("test_examples");
