@@ -35,8 +35,8 @@ public class DepenencyVisitor extends BaseVisitor {
 	
 	Dependency lazy_dependency = new Dependency();
 	
-	boolean concern_signal = false;
-	Set<IBinding> concern_bindings = new HashSet<IBinding>();
+	// boolean concern_signal = false;
+	// Set<IBinding> concern_bindings = new HashSet<IBinding>();
 	boolean signal = false;
 	Statement cared_statement = null;
 	
@@ -182,22 +182,24 @@ public class DepenencyVisitor extends BaseVisitor {
 			if (depd == null) {
 				// System.err.println("Warning no binding:" + node + "; must check it is not a variable.");
 			} else {
-				if (!signal && concern_signal) {
-					Iterator<IBinding> citr = concern_bindings.iterator();
-					while (citr.hasNext())
-					{
-						IBinding cib = citr.next();
-						Dependency dd = ibindings_dependencies.get(cib);
-						if (dd != null)
-						{
-							dd.Union(depd);
-						}
-					}
-				}
+//				if (!signal && concern_signal) {
+//					Iterator<IBinding> citr = concern_bindings.iterator();
+//					while (citr.hasNext())
+//					{
+//						IBinding cib = citr.next();
+//						Dependency dd = ibindings_dependencies.get(cib);
+//						if (dd != null)
+//						{
+//							dd.Union(depd);
+//						}
+//					}
+//				}
 				if (signal) {
 					Dependency dd = concerned_dependencies.get(cared_statement);
 					dd.Union(depd);
 				} else {
+					
+					
 					depd.AddStatement(FindMostCloseAncestorStatement(node));
 				}
 				if (lazy_need_dependency) {
@@ -268,13 +270,17 @@ public class DepenencyVisitor extends BaseVisitor {
 			if (AvoidStatement.IsAvoided(node)) {
 				return false;
 			}
-			ConcernedBindingVisitor cbv = new ConcernedBindingVisitor(concerned_bindings);
-			node.accept(cbv);
-			if (cbv.IsConcernedStatement()) {
-				concern_signal = true;
-				concern_bindings.clear();
-				concern_bindings.addAll(cbv.GetConcernedBindings());
-			}
+			
+			// TODO
+			
+			
+//			ConcernedBindingVisitor cbv = new ConcernedBindingVisitor(concerned_bindings);
+//			node.accept(cbv);
+//			if (cbv.IsConcernedStatement()) {
+//				concern_signal = true;
+//				concern_bindings.clear();
+//				concern_bindings.addAll(cbv.GetConcernedBindings());
+//			}
 			
 			// original logic.
 			int idx = concerned_statements.indexOf(node);
@@ -307,13 +313,17 @@ public class DepenencyVisitor extends BaseVisitor {
 			{
 				return;
 			}
-			ConcernedBindingVisitor cbv = new ConcernedBindingVisitor(concerned_bindings);
-			node.accept(cbv);
-			if (cbv.IsConcernedStatement())
-			{
-				concern_signal = false;
-				concern_bindings.clear();
-			}
+			
+			// TODO
+			
+			
+//			ConcernedBindingVisitor cbv = new ConcernedBindingVisitor(concerned_bindings);
+//			node.accept(cbv);
+//			if (cbv.IsConcernedStatement())
+//			{
+//				concern_signal = false;
+//				concern_bindings.clear();
+//			}
 			
 			// original logic.
 			int idx = concerned_statements.indexOf(node);
