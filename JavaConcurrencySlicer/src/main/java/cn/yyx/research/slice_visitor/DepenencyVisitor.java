@@ -10,7 +10,10 @@ import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.Assignment;
+import org.eclipse.jdt.core.dom.Expression;
 import org.eclipse.jdt.core.dom.IBinding;
+import org.eclipse.jdt.core.dom.MethodInvocation;
 import org.eclipse.jdt.core.dom.SimpleName;
 import org.eclipse.jdt.core.dom.Statement;
 import org.eclipse.jdt.core.dom.TryStatement;
@@ -37,7 +40,9 @@ public class DepenencyVisitor extends BaseVisitor {
 	boolean signal = false;
 	Statement cared_statement = null;
 	
-	boolean statement_handled = false;
+	boolean special_treated = false;
+	Set<ASTNode> special_nodes = new HashSet<ASTNode>();
+	boolean lazy_need_dependency = false;
 	
 	public DepenencyVisitor(List<IBinding> cbinds, List<Statement> lastnms, Map<Statement, Integer> sorder, String classname) {
 		super(classname);
@@ -149,7 +154,6 @@ public class DepenencyVisitor extends BaseVisitor {
 		IBinding ib = node.resolveBinding();
 //		System.err.println("name:" + node + ";bind:" + ib);
 //		String nodename = node.toString();
-		// TODO
 //		if (ib == null && !signal) //  && nodename.equals(classname)
 //		{
 //			System.err.println("unresolved binding node:" + node + ";parent:" + node.getParent());
@@ -174,7 +178,6 @@ public class DepenencyVisitor extends BaseVisitor {
 //		}
 		if (ib != null) {
 //			System.err.println("resolved binding:"+ib+";node:"+node+";parent:"+node.getParent());
-			statement_handled = true;
 			Dependency depd = ibindings_dependencies.get(ib);
 			if (depd == null) {
 				// System.err.println("Warning no binding:" + node + "; must check it is not a variable.");
@@ -197,26 +200,77 @@ public class DepenencyVisitor extends BaseVisitor {
 				} else {
 					depd.AddStatement(FindMostCloseAncestorStatement(node));
 				}
+				if (lazy_need_dependency) {
+					lazy_dependency.Union(depd);
+				}
 			}
 		} else {
 			// System.err.println("Warning unresolved binding:" + node + "; must check it is not a variable.");
+			if (special_treated && !signal) {
+				if (special_nodes.contains(node)) {
+					lazy_dependency.AddStatement(FindMostCloseAncestorStatement(node));
+					lazy_need_dependency = true;
+				}
+			}
 		}
 		return super.visit(node);
+	}
+	
+	@Override
+	public boolean visit(MethodInvocation node) {
+		Expression expr = node.getExpression();
+		if (expr != null) {
+			FirstSimpleNameVisitor fsnv = new FirstSimpleNameVisitor();
+			expr.accept(fsnv);
+			if (fsnv.HasSimpleName()) {
+				special_nodes.add(fsnv.getSimpleName());
+			}
+		}
+		special_treated = true;
+		return super.visit(node);
+	}
+	
+	@Override
+	public void endVisit(MethodInvocation node) {
+		Expression expr = node.getExpression();
+		special_treated = false;
+		special_nodes.remove(expr);
+		super.endVisit(node);
+	}
+	
+	@Override
+	public boolean visit(Assignment node) {
+		Expression expr = node.getLeftHandSide();
+		if (expr != null) {
+			FirstSimpleNameVisitor fsnv = new FirstSimpleNameVisitor();
+			expr.accept(fsnv);
+			if (fsnv.HasSimpleName()) {
+				special_nodes.add(fsnv.getSimpleName());
+			}
+		}
+		special_treated = true;
+		return super.visit(node);
+	}
+	
+	@Override
+	public void endVisit(Assignment node) {
+		Expression expr = node.getLeftHandSide();
+		special_treated = false;
+		special_nodes.remove(expr);
+		super.endVisit(node);
 	}
 	
 	@Override
 	public boolean preVisit2(ASTNode node) {
 		if (node instanceof Statement && !(node instanceof TryStatement))
 		{
-			statement_handled = false;
-			if (AvoidStatement.IsAvoided(node))
-			{
+			lazy_need_dependency = false;
+			if (AvoidStatement.IsAvoided(node)) {
 				return false;
 			}
 			ConcernedBindingVisitor cbv = new ConcernedBindingVisitor(concerned_bindings);
 			node.accept(cbv);
-			if (cbv.IsConcernedStatement())
-			{
+			if (cbv.IsConcernedStatement()) {
 				concern_signal = true;
 				concern_bindings.clear();
 				concern_bindings.addAll(cbv.GetConcernedBindings());
@@ -267,11 +321,6 @@ public class DepenencyVisitor extends BaseVisitor {
 				signal = false;
 				concerned++;
 				cared_statement = null;
-			}
-			if (!statement_handled)
-			{
-				// TODO
-				lazy_dependency.AddStatement(FindMostCloseAncestorStatement(node));
 			}
 		}
 		super.postVisit(node);

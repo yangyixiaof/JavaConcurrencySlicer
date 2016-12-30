@@ -17,7 +17,7 @@ import org.junit.runner.RunWith;
 @RunWith(EvoRunner.class) @EvoRunnerParameters(mockJVMNonDeterminism = true, useVFS = true, useVNET = true, resetStaticState = true, useJEE = true) 
 public class Account_ESTest extends Account_ESTest_scaffolding {
 
-  /*@Test(timeout = 4000)
+  @Test(timeout = 4000)
   public void test00()  throws Throwable  {
       String[] stringArray0 = new String[0];
       Account.main(stringArray0);
@@ -41,7 +41,7 @@ public class Account_ESTest extends Account_ESTest_scaffolding {
       Account account0 = new Account();
       Account.main(stringArray0);
       account0.checkResult(0);
-  }*/
+  }
 
   @Test(timeout = 4000)
   public void test03()  throws Throwable  {
@@ -59,7 +59,7 @@ public class Account_ESTest extends Account_ESTest_scaffolding {
       }
   }
 
-  /*@Test(timeout = 4000)
+  @Test(timeout = 4000)
   public void test04()  throws Throwable  {
       String[] stringArray0 = new String[0];
       Account.main(stringArray0);
@@ -548,5 +548,5 @@ public class Account_ESTest extends Account_ESTest_scaffolding {
          //
          verifyException("account.Account", e);
       }
-  }*/
+  }
 }
