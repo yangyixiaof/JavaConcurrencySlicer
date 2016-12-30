@@ -2,18 +2,20 @@ package account;
 
 import account.Account;
 
+import account.BankAccount;
+
 
 
 public class account_Account_TestCase1 {
 
     public static void main(String[] args) throws Exception {
-        final String[] stringArray0=new String[0];
-        Account.main(stringArray0);
+        final Account account0=new Account();
+        account0.checkResult(0);
         Thread t1 = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    Account.main(stringArray0);
+                    account0.checkResult(0);
                 } catch (Exception e) {
                 }
             }
@@ -22,7 +24,8 @@ public class account_Account_TestCase1 {
             @Override
             public void run() {
                 try {
-                    Account.main(stringArray0);
+                    String[] stringArray0=new String[7];
+                    account0.go(stringArray0);
                 } catch (Exception e) {
                 }
             }
