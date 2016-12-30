@@ -35,6 +35,8 @@ public class DepenencyVisitor extends BaseVisitor {
 	
 	Dependency lazy_dependency = new Dependency();
 	
+	Set<IBinding> one_statement_binding = new HashSet<IBinding>();
+	
 	// boolean concern_signal = false;
 	// Set<IBinding> concern_bindings = new HashSet<IBinding>();
 	boolean signal = false;
@@ -198,7 +200,16 @@ public class DepenencyVisitor extends BaseVisitor {
 					Dependency dd = concerned_dependencies.get(cared_statement);
 					dd.Union(depd);
 				} else {
-					
+					Iterator<IBinding> oitr = one_statement_binding.iterator();
+					while (oitr.hasNext())
+					{
+						IBinding oib = oitr.next();
+						Dependency dd = ibindings_dependencies.get(oib);
+						if (dd != null)
+						{
+							dd.Union(depd);
+						}
+					}
 					
 					depd.AddStatement(FindMostCloseAncestorStatement(node));
 				}
@@ -271,8 +282,9 @@ public class DepenencyVisitor extends BaseVisitor {
 				return false;
 			}
 			
-			// TODO
-			
+			AllBindingVisitor abv = new AllBindingVisitor();
+			node.accept(abv);
+			one_statement_binding.addAll(abv.GetAllBindings());
 			
 //			ConcernedBindingVisitor cbv = new ConcernedBindingVisitor(concerned_bindings);
 //			node.accept(cbv);
@@ -314,8 +326,7 @@ public class DepenencyVisitor extends BaseVisitor {
 				return;
 			}
 			
-			// TODO
-			
+			one_statement_binding.clear();
 			
 //			ConcernedBindingVisitor cbv = new ConcernedBindingVisitor(concerned_bindings);
 //			node.accept(cbv);
