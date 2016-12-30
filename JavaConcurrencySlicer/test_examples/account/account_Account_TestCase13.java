@@ -14,7 +14,7 @@ public class account_Account_TestCase13 {
             @Override
             public void run() {
                 try {
-                    Account.Service(0,0);
+                    Account.Service(0,(-2221));
                 } catch (Exception e) {
                 }
             }
@@ -34,7 +34,7 @@ public class account_Account_TestCase13 {
             @Override
             public void run() {
                 try {
-                    Account.Service(0,(-2221));
+                    Account.Service(0,0);
                 } catch (Exception e) {
                 }
             }

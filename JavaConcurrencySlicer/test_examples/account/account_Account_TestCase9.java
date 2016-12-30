@@ -15,7 +15,7 @@ public class account_Account_TestCase9 {
             @Override
             public void run() {
                 try {
-                    account0.checkResult((-1099));
+                    account0.checkResult(0);
                 } catch (Exception e) {
                 }
             }
@@ -24,7 +24,7 @@ public class account_Account_TestCase9 {
             @Override
             public void run() {
                 try {
-                    account0.checkResult(0);
+                    account0.checkResult((-1099));
                 } catch (Exception e) {
                 }
             }

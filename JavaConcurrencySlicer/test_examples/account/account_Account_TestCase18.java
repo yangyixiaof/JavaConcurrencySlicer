@@ -13,9 +13,7 @@ public class account_Account_TestCase18 {
             @Override
             public void run() {
                 try {
-                    Account account0=new Account();
-                    String[] stringArray0=new String[1];
-                    account0.go(stringArray0);
+                    Account.Service(784,784);
                 } catch (Exception e) {
                 }
             }
@@ -24,7 +22,9 @@ public class account_Account_TestCase18 {
             @Override
             public void run() {
                 try {
-                    Account.Service(784,784);
+                    Account account0=new Account();
+                    String[] stringArray0=new String[1];
+                    account0.go(stringArray0);
                 } catch (Exception e) {
                 }
             }
