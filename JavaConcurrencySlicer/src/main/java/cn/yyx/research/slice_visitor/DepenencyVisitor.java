@@ -27,7 +27,7 @@ import cn.yyx.research.slice_visitor.util.SlicedCodeGenerator;
 public class DepenencyVisitor extends BaseVisitor {
 	
 	int concerned = 0;
-	final List<IBinding> concerned_bindings;
+	// final List<IBinding> concerned_bindings;
 	final List<Statement> concerned_statements;
 	final Map<Statement, Integer> statements_order;
 	Map<Statement, Dependency> concerned_dependencies = new HashMap<Statement, Dependency>();
@@ -51,7 +51,7 @@ public class DepenencyVisitor extends BaseVisitor {
 		statements_order = sorder;
 		Dependency dep = new Dependency(lastnms);
 		concerned_statements = dep.OrderedStatements(statements_order);
-		concerned_bindings = cbinds;
+		// concerned_bindings = cbinds;
 		// debugging.
 		// System.err.println("test:" + concerned_statements);
 	}
