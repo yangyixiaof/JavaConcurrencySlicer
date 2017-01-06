@@ -16,6 +16,7 @@ import cn.yyx.research.slice_visitor.util.SlicedCodeGenerator;
 
 public class Slicer {
 	
+	public static final String consuitedir = "consuite-tests";
 	String testdir = null;
 	
 	public Slicer(String testDir) {
@@ -76,7 +77,7 @@ public class Slicer {
 					classname = classname + count;
 					String packagename = prename.replaceAll("_", ".");
 					String filepackagename = prename.replaceAll("_", "/");
-					FileUtil.WriteToFile(classname + ".java", tc.getContent().replace(SlicedCodeGenerator.Class_Final_Name, classname).replace(SlicedCodeGenerator.PACKAGE, packagename), testdir + "/" + filepackagename);
+					FileUtil.WriteToFile(classname + ".java", tc.getContent().replace(SlicedCodeGenerator.Class_Final_Name, classname).replace(SlicedCodeGenerator.PACKAGE, packagename), consuitedir + "/" + filepackagename);
 				}
 				
 				// unit test.
