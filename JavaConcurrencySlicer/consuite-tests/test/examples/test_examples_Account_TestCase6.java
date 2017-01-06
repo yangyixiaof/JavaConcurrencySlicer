@@ -4,8 +4,6 @@ import account.Account;
 
 import java.util.Random;
 
-import org.evosuite.runtime.System;
-
 import org.evosuite.runtime.mock.java.util.MockRandom;
 
 
