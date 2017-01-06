@@ -29,7 +29,7 @@ public class ParseSliceVisitor extends ASTVisitor {
 	public boolean visit(ImportDeclaration node) {
 		String idstr = node.getName().toString();
 		// System.out.println("ImportDeclaration:" + idstr);
-		if (!idstr.startsWith("org.evosuite.runtime.EvoRunner") && !idstr.startsWith("org.evosuite.runtime.EvoAssertions") && !idstr.startsWith("org.junit"))
+		if (!idstr.startsWith("org.evosuite.runtime.EvoRunner") && !idstr.startsWith("org.evosuite.runtime.System") && !idstr.startsWith("org.evosuite.runtime.EvoAssertions") && !idstr.startsWith("org.junit"))
 		{
 			import_content.append(node.toString() + "\n");
 		}
