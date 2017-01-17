@@ -36,7 +36,7 @@ public class Slicer {
 		}
 		File root = new File(testDir);
 		// System.out.println(rootDir.listFiles());
-		if (root != null)
+		if (root != null && root.listFiles() != null)
 		{
 			File[] files = root.listFiles();
 			List<File> handlefiles = new LinkedList<File>();
