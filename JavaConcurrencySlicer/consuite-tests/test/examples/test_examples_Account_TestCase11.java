@@ -25,9 +25,7 @@ public class test_examples_Account_TestCase11 {
             @Override
             public void run() {
                 try {
-                    Account account0=new Account();
-                    String[] stringArray0=new String[4];
-                    account0.go(stringArray0);
+                    Account.Service(481,481);
                 } catch (Exception e) {
                 }
             }
@@ -36,7 +34,9 @@ public class test_examples_Account_TestCase11 {
             @Override
             public void run() {
                 try {
-                    Account.Service(481,481);
+                    Account account0=new Account();
+                    String[] stringArray0=new String[4];
+                    account0.go(stringArray0);
                 } catch (Exception e) {
                 }
             }

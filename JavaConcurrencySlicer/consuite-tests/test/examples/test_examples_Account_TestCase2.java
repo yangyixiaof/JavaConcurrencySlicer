@@ -17,8 +17,7 @@ public class test_examples_Account_TestCase2 {
             @Override
             public void run() {
                 try {
-                    String[] stringArray0=new String[4];
-                    account0.go(stringArray0);
+                    account0.checkResult(0);
                 } catch (Exception e) {
                 }
             }
@@ -27,7 +26,8 @@ public class test_examples_Account_TestCase2 {
             @Override
             public void run() {
                 try {
-                    account0.checkResult(0);
+                    String[] stringArray0=new String[4];
+                    account0.go(stringArray0);
                 } catch (Exception e) {
                 }
             }
