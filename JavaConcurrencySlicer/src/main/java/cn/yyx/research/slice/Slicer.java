@@ -54,10 +54,10 @@ public class Slicer {
 			testDir = testDir.replace('\\', '/');
 			String prename = testDir.substring(testDir.indexOf('/', testdir.length())+1).replace('/', '_');
 			
-			int count = 0;
 			Iterator<File> fitr = handlefiles.iterator();
 			while (fitr.hasNext())
 			{
+				int count = 0;
 				File f = fitr.next();
 				String targetclass = f.getName().substring(0, f.getName().lastIndexOf(suffix + ".java"));
 				String prefix = targetclass + "_";
