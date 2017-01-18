@@ -30,7 +30,6 @@ public class SliceTest
 			e.printStackTrace();
 			throw e;
 		}
-		
 	}
 	
 }

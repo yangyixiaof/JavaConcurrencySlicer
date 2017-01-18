@@ -21,12 +21,12 @@ public class CsrfPreventionFilter_ESTest extends CsrfPreventionFilter_ESTest_sca
 
   @Test(timeout = 4000)
   public void test0()  throws Throwable  {
-      CsrfPreventionFilter.LruCache<Object> csrfPreventionFilter_LruCache0 = new CsrfPreventionFilter.LruCache<Object>(0);
+	  CsrfPreventionFilter.LruCache<Object> csrfPreventionFilter_LruCache0 = new CsrfPreventionFilter.LruCache<Object>(0);
       CsrfPreventionFilter.LruCache<String> csrfPreventionFilter_LruCache1 = new CsrfPreventionFilter.LruCache<String>(0);
       boolean boolean0 = csrfPreventionFilter_LruCache0.contains(csrfPreventionFilter_LruCache1);
   }
-
-  @Test(timeout = 4000)
+  
+  /*@Test(timeout = 4000)
   public void test1()  throws Throwable  {
       CsrfPreventionFilter csrfPreventionFilter0 = new CsrfPreventionFilter();
       csrfPreventionFilter0.setEntryPoints("4L,=*uy");
@@ -61,5 +61,5 @@ public class CsrfPreventionFilter_ESTest extends CsrfPreventionFilter_ESTest_sca
       HttpServletResponse httpServletResponse0 = mock(HttpServletResponse.class, new ViolatedAssumptionAnswer());
       CsrfPreventionFilter.CsrfResponseWrapper csrfPreventionFilter_CsrfResponseWrapper0 = new CsrfPreventionFilter.CsrfResponseWrapper(httpServletResponse0, "~;JN");
       csrfPreventionFilter_LruCache0.add(csrfPreventionFilter_CsrfResponseWrapper0);
-  }
+  }*/
 }
