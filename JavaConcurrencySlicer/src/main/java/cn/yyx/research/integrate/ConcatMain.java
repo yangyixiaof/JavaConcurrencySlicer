@@ -3,6 +3,7 @@ package cn.yyx.research.integrate;
 import java.io.File;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -165,7 +166,11 @@ public class ConcatMain {
 		ConcatMain cm = new ConcatMain(args);
 		String[] ref_args = cm.GetRefinedArgs();
 		String task_type = cm.Task_type();
-
+		String projectcp = CommandUtil.FindProjectClassPath(ref_args);
+		String pathsep = System.getProperty("path.separator");
+		String classpath = "." + (projectcp == null ? "" : (pathsep + projectcp)) + pathsep
+				+ ResourceUtil.Evosuite_Runtime;
+		
 		StringBuffer sb = new StringBuffer();
 		for (int i = 0; i < ref_args.length; i++) {
 			sb.append(" " + ref_args[i]);
@@ -175,7 +180,7 @@ public class ConcatMain {
 		cm.RunOneProcess(cmd, true, new DisplayInfo(System.out), new DisplayInfo(System.err));
 
 		Slicer s = new Slicer("evosuite-tests");
-		s.SliceSuffixedTestInDirectory("_ESTest");
+		s.SliceSuffixedTestInDirectory("_ESTest", Arrays.asList(classpath.split(pathsep)));
 		SystemStreamUtil.Flush();
 
 		// ============ start compiling! ============
@@ -186,10 +191,7 @@ public class ConcatMain {
 			FileUtil.DeleteFolder(classes.getAbsolutePath());
 		}
 		classes.mkdir();
-		String projectcp = CommandUtil.FindProjectClassPath(ref_args);
-		String pathsep = System.getProperty("path.separator");
-		String classpath = "." + (projectcp == null ? "" : (pathsep + projectcp)) + pathsep
-				+ ResourceUtil.Evosuite_Runtime;
+		
 		FileIterator fi1 = new FileIterator(Slicer.consuitedir, ".+(\\.java)$");
 		Iterator<File> fitr1 = fi1.EachFileIterator();
 		while (fitr1.hasNext()) {

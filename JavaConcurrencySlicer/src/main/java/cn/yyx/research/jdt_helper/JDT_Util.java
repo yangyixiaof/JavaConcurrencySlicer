@@ -1,5 +1,7 @@
 package cn.yyx.research.jdt_helper;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.jdt.core.JavaCore;
@@ -10,7 +12,7 @@ import org.eclipse.jface.text.IDocument;
 
 public class JDT_Util {
 
-	public static CompilationUnit parseSourceCode(String identifier, IDocument pdocument) {
+	public static CompilationUnit parseSourceCode(String identifier, IDocument pdocument, List<String> classpaths) {
 		ASTParser parser = ASTParser.newParser(AST.JLS8);
 		
 		parser.setResolveBindings(true);
@@ -19,7 +21,14 @@ public class JDT_Util {
 		String[] encodings = new String[] { }; // "UTF-8"
 		String javahome = System.getProperty("java.home");
 		String rtpath = javahome+"/lib/rt.jar";
-		String[] classpath = { rtpath };
+		List<String> fpaths = new LinkedList<String>();
+		fpaths.add(rtpath);
+		if (classpaths != null)
+		{
+			fpaths.addAll(classpaths);
+		}
+		String[] classpath = new String[fpaths.size()];
+		fpaths.toArray(classpath);
 		parser.setEnvironment(classpath, sources, encodings, true);
 		
 		parser.setKind(ASTParser.K_COMPILATION_UNIT);

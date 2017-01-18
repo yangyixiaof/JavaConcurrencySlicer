@@ -1,5 +1,7 @@
 package cn.yyx.research.JavaSlicer;
 
+import java.util.Arrays;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -25,7 +27,7 @@ public class SliceTest
 	{
 		try {
 			Slicer s = new Slicer("test_examples");
-			s.SliceSuffixedTestInDirectory("_ESTest");
+			s.SliceSuffixedTestInDirectory("_ESTest", Arrays.asList(new String[]{".", "test_lib/catalina.jar"}));
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;

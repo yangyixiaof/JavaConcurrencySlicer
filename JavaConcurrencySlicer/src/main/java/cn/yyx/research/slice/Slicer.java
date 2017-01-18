@@ -23,12 +23,12 @@ public class Slicer {
 		this.testdir = testDir;
 	}
 	
-	public void SliceSuffixedTestInDirectory(String suffix)
+	public void SliceSuffixedTestInDirectory(String suffix, List<String> classpaths)
 	{
-		SliceSuffixedTestInDirectory(suffix, testdir);
+		SliceSuffixedTestInDirectory(suffix, testdir, classpaths);
 	}
 	
-	private void SliceSuffixedTestInDirectory(String suffix, String testDir)
+	private void SliceSuffixedTestInDirectory(String suffix, String testDir, List<String> classpaths)
 	{
 		if (testDir.endsWith("/") || testDir.endsWith("\\"))
 		{
@@ -62,7 +62,7 @@ public class Slicer {
 				String targetclass = f.getName().substring(0, f.getName().lastIndexOf(suffix + ".java"));
 				String prefix = targetclass + "_";
 				ParseSliceVisitor psv = new ParseSliceVisitor(targetclass);
-				CompilationUnit cu = JDT_Util.parseSourceCode(f.getName(), new Document(FileUtil.ReadFromFile(f)));
+				CompilationUnit cu = JDT_Util.parseSourceCode(f.getName(), new Document(FileUtil.ReadFromFile(f)), classpaths);
 				// testing code.
 				// cu.accept(new TestVisitor());
 				cu.accept(psv);
@@ -104,7 +104,7 @@ public class Slicer {
 			
 			for (File f : files) {
 				if (f.isDirectory()) {
-					SliceSuffixedTestInDirectory(suffix, testDir+"/"+f.getName());
+					SliceSuffixedTestInDirectory(suffix, testDir+"/"+f.getName(), classpaths);
 				}
 			}
 			
