@@ -8,6 +8,7 @@ import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.ASTVisitor;
 import org.eclipse.jdt.core.dom.Expression;
 import org.eclipse.jdt.core.dom.IBinding;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.SimpleName;
 import org.eclipse.jdt.core.dom.Statement;
 import org.eclipse.jdt.core.dom.Type;
@@ -44,7 +45,14 @@ public class BaseVisitor extends ASTVisitor {
 			IBinding ib = vdf.getName().resolveBinding();
 			if (ib == null)
 			{
-				System.err.println("What the fuck! IBinding is null?" + " Wrong code is:" + node);
+				System.err.println("Base_Visitor:What the fuck! IBinding is null?" + " Wrong code is:" + node);
+				ASTNode temp = node;
+				while (temp != null && !(temp instanceof MethodDeclaration))
+				{
+					temp = temp.getParent();
+				}
+				System.out.println("possible method declaration:" + temp);
+				// possible wrong code:CsrfPreventionFilter.LruCache<Object> csrfPreventionFilter_LruCache0=new CsrfPreventionFilter.LruCache<Object>(0);
 				System.exit(1);
 			}
 			if (need_concern)

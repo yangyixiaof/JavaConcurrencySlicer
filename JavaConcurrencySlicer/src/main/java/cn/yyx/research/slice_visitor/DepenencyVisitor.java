@@ -13,6 +13,7 @@ import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.Assignment;
 import org.eclipse.jdt.core.dom.Expression;
 import org.eclipse.jdt.core.dom.IBinding;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.MethodInvocation;
 import org.eclipse.jdt.core.dom.SimpleName;
 import org.eclipse.jdt.core.dom.Statement;
@@ -358,7 +359,13 @@ public class DepenencyVisitor extends BaseVisitor {
 			IBinding ib = vdf.getName().resolveBinding();
 			if (ib == null)
 			{
-				System.err.println("What the fuck! IBinding is null?" + " Wrong code is:" + node);
+				System.err.println("Dependency_Visitor:What the fuck! IBinding is null?" + " Wrong code is:" + node);
+				ASTNode temp = node;
+				while (temp != null && !(temp instanceof MethodDeclaration))
+				{
+					temp = temp.getParent();
+				}
+				System.out.println("possible method declaration:" + temp);
 				System.exit(1);
 			}
 			ibindings_dependencies.put(ib, new Dependency(lazy_dependency));
