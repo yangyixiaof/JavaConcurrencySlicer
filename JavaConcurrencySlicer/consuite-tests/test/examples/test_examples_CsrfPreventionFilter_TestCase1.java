@@ -12,7 +12,7 @@ import org.evosuite.runtime.ViolatedAssumptionAnswer;
 
 
 
-public class test_examples_CsrfPreventionFilter_TestCase16 {
+public class test_examples_CsrfPreventionFilter_TestCase1 {
 
     public static void main(String[] args) throws Exception {
         Thread t1 = new Thread(new Runnable() {
