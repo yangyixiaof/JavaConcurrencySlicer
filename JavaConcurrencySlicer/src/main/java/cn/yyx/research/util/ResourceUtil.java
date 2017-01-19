@@ -22,13 +22,13 @@ public class ResourceUtil {
 	public static void InitialEnvironment()
 	{
 		InputStream is = null;
-		is = ResourceUtil.class.getResourceAsStream("/resources/" + TrimDot(Evosuite_Master));
+		is = ResourceUtil.class.getResourceAsStream("/" + TrimDot(Evosuite_Master));
 		FileUtil.ReadFromStreamAndWriteToFile(is, Evosuite_Master);
-		is = ResourceUtil.class.getResourceAsStream("/resources/" + TrimDot(Calfuzzer));
+		is = ResourceUtil.class.getResourceAsStream("/" + TrimDot(Calfuzzer));
 		FileUtil.ReadFromStreamAndWriteToFile(is, Calfuzzer);
-		is = ResourceUtil.class.getResourceAsStream("/resources/" + TrimDot(Evosuite_Runtime));
+		is = ResourceUtil.class.getResourceAsStream("/" + TrimDot(Evosuite_Runtime));
 		FileUtil.ReadFromStreamAndWriteToFile(is, Evosuite_Runtime);
-		is = ResourceUtil.class.getResourceAsStream("/resources/" + TrimDot(Ant_Run));
+		is = ResourceUtil.class.getResourceAsStream("/" + TrimDot(Ant_Run));
 		FileUtil.ReadFromStreamAndWriteToFile(is, Ant_Run);
 	}
 	
