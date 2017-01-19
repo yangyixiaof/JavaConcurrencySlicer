@@ -205,7 +205,7 @@ public class ConcatMain {
 //			cm.RunOneProcess(cmd, false, new DisplayInfo(System.out), new DisplayInfo(System.err));
 			
 			cmd = "javac " + f.getAbsolutePath() + " -d classes -cp " + classpath;
-			cm.RunOneProcess(cmd, true, new DisplayInfo(System.out), new DisplayInfo(System.err));// false
+			cm.RunOneProcess(cmd, false, new DisplayInfo(System.out), new DisplayInfo(System.err));
 			System.out.println("Successfully compile the java file:" + f.getAbsolutePath() + ".");
 		}
 		SystemStreamUtil.Flush();
@@ -252,7 +252,7 @@ public class ConcatMain {
 					+ " -Dclass_path=" + classpath_ant;
 			DisplayInfoAndConsumeCalfuzzerResult out = new DisplayInfoAndConsumeCalfuzzerResult(System.out);
 			DisplayInfoAndConsumeCalfuzzerResult err = new DisplayInfoAndConsumeCalfuzzerResult(System.err);
-			cm.RunOneProcess(cmd, true, out, err);
+			cm.RunOneProcess(cmd, false, out, err);
 			
 			ArrayList<String> out_result = out.GetRaces();
 			ArrayList<String> err_result = err.GetRaces();
