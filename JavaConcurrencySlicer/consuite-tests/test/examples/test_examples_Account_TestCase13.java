@@ -4,8 +4,6 @@ import account.Account;
 
 import java.util.Random;
 
-import org.evosuite.runtime.mock.java.util.MockRandom;
-
 
 
 public class test_examples_Account_TestCase13 {
@@ -16,7 +14,7 @@ public class test_examples_Account_TestCase13 {
             public void run() {
                 try {
                     Account account0=new Account();
-                    MockRandom mockRandom0=new MockRandom();
+                    Random mockRandom0=new Random();
                     account0.Bank_random=(Random)mockRandom0;
                     account0.Bank_random=null;
                     account0.go((String[])null);

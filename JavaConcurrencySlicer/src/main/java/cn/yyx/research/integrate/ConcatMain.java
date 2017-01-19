@@ -242,9 +242,9 @@ public class ConcatMain {
 				}
 			}
 			
-			cmd = ant_cmd + " -f " + ResourceUtil.Ant_Run + " datarace_instr -Dtest_class=" + full_name
-					+ " -Dclass_path=" + classpath_ant;
-			cm.RunOneProcess(cmd, false, new DisplayInfo(System.out), new DisplayInfo(System.err));
+//			cmd = ant_cmd + " -f " + ResourceUtil.Ant_Run + " datarace_instr -Dtest_class=" + full_name
+//					+ " -Dclass_path=" + classpath_ant;
+//			cm.RunOneProcess(cmd, false, new DisplayInfo(System.out), new DisplayInfo(System.err));
 			
 			cmd = ant_cmd + " -f " + ResourceUtil.Ant_Run + " calfuzzer_run -Dtest_class=" + full_name + " -Dtask_type=" + task_type
 					+ " -Dclass_path=" + classpath_ant;

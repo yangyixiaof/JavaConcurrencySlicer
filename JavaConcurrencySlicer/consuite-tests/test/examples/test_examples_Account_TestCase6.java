@@ -4,8 +4,6 @@ import account.Account;
 
 import java.util.Random;
 
-import org.evosuite.runtime.mock.java.util.MockRandom;
-
 
 
 public class test_examples_Account_TestCase6 {
@@ -27,7 +25,7 @@ public class test_examples_Account_TestCase6 {
             @Override
             public void run() {
                 try {
-                    Account.Service(0,0);
+                    account0.go(stringArray0);
                 } catch (Exception e) {
                 }
             }
@@ -36,7 +34,7 @@ public class test_examples_Account_TestCase6 {
             @Override
             public void run() {
                 try {
-                    account0.go(stringArray0);
+                    Account.Service(0,0);
                 } catch (Exception e) {
                 }
             }

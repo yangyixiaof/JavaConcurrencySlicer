@@ -15,5 +15,13 @@ public class ProcessTest {
 		cmd = "java -version";
 		cm.RunOneProcess(cmd, false, new DisplayInfo(System.out), new DisplayInfo(System.err));
 	}
+	
+	@Test
+	public void testx2()
+	{
+		String av = "as";
+		String cd = av.substring(0, av.lastIndexOf('.'));
+		System.out.println(cd);
+	}
 
 }
