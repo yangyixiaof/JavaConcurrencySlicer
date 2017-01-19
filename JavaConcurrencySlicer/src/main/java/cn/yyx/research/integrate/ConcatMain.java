@@ -95,8 +95,10 @@ public class ConcatMain {
 			Java8_Home = System.getenv("JAVA_HOME").replace('\\', '/');
 		} else if (Java7_Home == null && Java8_Home == null) {
 			System.err.println(
-					"Error! we need only both java7 path and java8 path set through -Djava7= or -Djava8=.");
-			System.exit(1);
+					"Warning! we need only both java7 path and java8 path set through -Djava7= or -Djava8=.");
+			// System.exit(1);
+			Java8_Home = System.getenv("JAVA_HOME").replace('\\', '/');
+			Java7_Home = System.getenv("JAVA_HOME").replace('\\', '/');
 		}
 	}
 
@@ -203,7 +205,7 @@ public class ConcatMain {
 //			cm.RunOneProcess(cmd, false, new DisplayInfo(System.out), new DisplayInfo(System.err));
 			
 			cmd = "javac " + f.getAbsolutePath() + " -d classes -cp " + classpath;
-			cm.RunOneProcess(cmd, false, new DisplayInfo(System.out), new DisplayInfo(System.err));
+			cm.RunOneProcess(cmd, true, new DisplayInfo(System.out), new DisplayInfo(System.err));// false
 			System.out.println("Successfully compile the java file:" + f.getAbsolutePath() + ".");
 		}
 		SystemStreamUtil.Flush();

@@ -11,7 +11,6 @@ import org.eclipse.jface.text.Document;
 import cn.yyx.research.file_util.FileUtil;
 import cn.yyx.research.java_slicer.TestCase;
 import cn.yyx.research.jdt_helper.JDT_Util;
-import cn.yyx.research.slice_visitor.MockImportModifyVisitor;
 import cn.yyx.research.slice_visitor.ParseSliceVisitor;
 import cn.yyx.research.slice_visitor.util.SlicedCodeGenerator;
 
@@ -66,9 +65,8 @@ public class Slicer {
 				CompilationUnit cu = JDT_Util.parseSourceCode(f.getName(), new Document(FileUtil.ReadFromFile(f)), classpaths);
 				// testing code.
 				// cu.accept(new TestVisitor());
-				cu.accept(new MockImportModifyVisitor());
-				// TODO
-				System.out.println("changed cu:"+cu);
+				// cu.accept(new MockImportModifyVisitor());
+				// System.out.println("changed cu:"+cu);
 				cu.accept(psv);
 				List<TestCase> lts = psv.GetTestCases();
 				Iterator<TestCase> litr = lts.iterator();
