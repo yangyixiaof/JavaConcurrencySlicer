@@ -20,7 +20,7 @@ public class ProcessTest {
 	public void testx2()
 	{
 		String av = "as";
-		String cd = av.substring(0, av.lastIndexOf('.'));
+		String cd = av.substring(0, av.lastIndexOf('.')+1);
 		System.out.println(cd);
 	}
 
