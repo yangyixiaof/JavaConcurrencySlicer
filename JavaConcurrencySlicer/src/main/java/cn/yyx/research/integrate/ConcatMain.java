@@ -242,12 +242,16 @@ public class ConcatMain {
 				}
 			}
 			
+			cmd = ant_cmd + " -f " + ResourceUtil.Ant_Run + " datarace_instr -Dtest_class=" + full_name
+					+ " -Dclass_path=" + classpath_ant;
+			cm.RunOneProcess(cmd, false, new DisplayInfo(System.out), new DisplayInfo(System.err));
+			
 			cmd = ant_cmd + " -f " + ResourceUtil.Ant_Run + " calfuzzer_run -Dtest_class=" + full_name + " -Dtask_type=" + task_type
 					+ " -Dclass_path=" + classpath_ant;
-
 			DisplayInfoAndConsumeCalfuzzerResult out = new DisplayInfoAndConsumeCalfuzzerResult(System.out);
 			DisplayInfoAndConsumeCalfuzzerResult err = new DisplayInfoAndConsumeCalfuzzerResult(System.err);
-			cm.RunOneProcess(cmd, false, out, err);
+			cm.RunOneProcess(cmd, true, out, err);
+			
 			ArrayList<String> out_result = out.GetRaces();
 			ArrayList<String> err_result = err.GetRaces();
 			Map<String, Integer> result_count = new TreeMap<String, Integer>();
