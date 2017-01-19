@@ -103,7 +103,7 @@
             </syspropertyset>
             <classpath>
                 <pathelement location="${javato.home.dir}/classes"/>
-                <pathelement location="${javato.home.dir}/lib/sootall-2.3.0.jar"/>
+                <!--<pathelement location="${javato.home.dir}/lib/sootall-2.3.0.jar"/>-->
                 <path refid="javato_app_class_path"/>
             </classpath>
         </java>
