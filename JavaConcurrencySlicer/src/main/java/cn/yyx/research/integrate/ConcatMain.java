@@ -213,14 +213,14 @@ public class ConcatMain {
 		// ============ start detecting bugs! ============
 		System.out.println("============ start detecting bugs! ============");
 		
-		String ant_cmd = "ant";
-		if (EnvironmentUtil.IsWindows())
-		{
-			ant_cmd = "ant.bat";
-		}
+//		String ant_cmd = "ant";
+//		if (EnvironmentUtil.IsWindows())
+//		{
+//			ant_cmd = "ant.bat";
+//		}
 		
-		classpath += (pathsep + ResourceUtil.Calfuzzer + pathsep + Compiled_Classpath);
-		String classpath_ant = classpath.replace(';', ':');
+		classpath += (pathsep + Compiled_Classpath); // pathsep + ResourceUtil.Calfuzzer + 
+		// String classpath_ant = classpath.replace(';', ':');
 		
 		String one_class = null;
 		Map<String, Integer> final_result_count = new TreeMap<String, Integer>();
@@ -235,37 +235,41 @@ public class ConcatMain {
 					'.');
 			
 			String temp_one_class = full_name.substring(0, full_name.lastIndexOf("_TestCase"));
-			if (one_class == null) {
-				one_class = temp_one_class;
-			} else {
-				if (!one_class.equals(temp_one_class))
-				{
-					PrintResultMap(final_result_count, one_class);
-				}
+			if (one_class != null && !one_class.equals(temp_one_class)) {
+				PrintResultMap(final_result_count, one_class);
 			}
+			one_class = temp_one_class;
 			
 //			cmd = ant_cmd + " -f " + ResourceUtil.Ant_Run + " datarace_instr -Dtest_class=" + full_name
 //					+ " -Dclass_path=" + classpath_ant;
 //			cm.RunOneProcess(cmd, false, new DisplayInfo(System.out), new DisplayInfo(System.err));
 			
-			cmd = ant_cmd + " -f " + ResourceUtil.Ant_Run + " calfuzzer_run -Dtest_class=" + full_name + " -Dtask_type=" + task_type
-					+ " -Dclass_path=" + classpath_ant;
-			DisplayInfoAndConsumeCalfuzzerResult out = new DisplayInfoAndConsumeCalfuzzerResult(System.out);
-			DisplayInfoAndConsumeCalfuzzerResult err = new DisplayInfoAndConsumeCalfuzzerResult(System.err);
+			String rvpredict = System.getenv("RVPREDICT_HOME").replace('\\', '/') + "/" + "rvpredict.jar";
+			
+//			cmd = ant_cmd + " -f " + ResourceUtil.Ant_Run + " calfuzzer_run -Dtest_class=" + full_name + " -Dtask_type=" + task_type
+//					+ " -Dclass_path=" + classpath_ant;
+//			DisplayInfoAndConsumeCalfuzzerResult out = new DisplayInfoAndConsumeCalfuzzerResult(System.out);
+//			DisplayInfoAndConsumeCalfuzzerResult err = new DisplayInfoAndConsumeCalfuzzerResult(System.err);
+			
+			cmd = "java -jar " + rvpredict + " -cp " + classpath + " " + full_name;
+			DisplayInfoAndConsumeRvpredictResult out = new DisplayInfoAndConsumeRvpredictResult(System.out);
+			DisplayInfoAndConsumeRvpredictResult err = new DisplayInfoAndConsumeRvpredictResult(System.err);
+			
 			cm.RunOneProcess(cmd, false, out, err);
 			
 			ArrayList<String> out_result = out.GetRaces();
 			ArrayList<String> err_result = err.GetRaces();
-			Map<String, Integer> result_count = new TreeMap<String, Integer>();
-			FillResultMap(out_result, result_count);
-			FillResultMap(err_result, result_count);
-			FillFinalResultMap(final_result_count, result_count);
 			
-//			List<String> test_list = new LinkedList<String>();
-//			test_list.add("============== " + "Detect race in " + full_name + " ==============");
-//			test_list.addAll(out_result);
-//			test_list.addAll(err_result);
-//			FileUtil.AppendToFile("compare_result.1k", test_list);
+//			Map<String, Integer> result_count = new TreeMap<String, Integer>();
+//			FillResultMap(out_result, result_count);
+//			FillResultMap(err_result, result_count);
+//			FillFinalResultMap(final_result_count, result_count);
+			
+			List<String> test_list = new LinkedList<String>();
+			test_list.add("============== " + "Detect race in " + full_name + " ==============");
+			test_list.addAll(out_result);
+			test_list.addAll(err_result);
+			FileUtil.AppendToFile("rvpredict_result.1k", test_list);
 			
 			System.out.println("Successfully " + task_type + " in:" + full_name + ".");
 		}
@@ -279,8 +283,8 @@ public class ConcatMain {
 			PrintResultMap(final_result_count, one_class);
 		}
 		SystemStreamUtil.Flush();
-		cmd = ant_cmd + " -f " + ResourceUtil.Ant_Run + " clean_here";
-		cm.RunOneProcess(cmd, false, new DisplayInfo(System.out), new DisplayInfo(System.err));
+//		cmd = ant_cmd + " -f " + ResourceUtil.Ant_Run + " clean_here";
+//		cm.RunOneProcess(cmd, false, new DisplayInfo(System.out), new DisplayInfo(System.err));
 		if (classes.exists()) {
 			FileUtil.DeleteFolder(classes.getAbsolutePath());
 		}
@@ -309,46 +313,46 @@ public class ConcatMain {
 		result.clear();
 	}
 	
-	private static void FillFinalResultMap(Map<String, Integer> final_result_count, Map<String, Integer> result_count)
-	{
-		if (final_result_count.isEmpty()) {
-			final_result_count.putAll(result_count);
-		} else {
-			Set<String> rkeys = result_count.keySet();
-			Iterator<String> ritr = rkeys.iterator();
-			while (ritr.hasNext())
-			{
-				String key = ritr.next();
-				int count = result_count.get(key);
-				Integer final_count = final_result_count.get(key);
-				if (final_count == null) {
-					final_count = count;
-				} else {
-					if (final_count < count)
-					{
-						final_count = count;
-					}
-				}
-				final_result_count.put(key, final_count);
-			}
-		}
-	}
-	
-	private static void FillResultMap(List<String> result, Map<String, Integer> result_count)
-	{
-		Iterator<String> ritr = result.iterator();
-		while (ritr.hasNext())
-		{
-			String one = ritr.next();
-			Integer rs = result_count.get(one);
-			if (rs == null)
-			{
-				rs = 0;
-			}
-			rs++;
-			result_count.put(one, rs);
-		}
-	}
+//	private static void FillFinalResultMap(Map<String, Integer> final_result_count, Map<String, Integer> result_count)
+//	{
+//		if (final_result_count.isEmpty()) {
+//			final_result_count.putAll(result_count);
+//		} else {
+//			Set<String> rkeys = result_count.keySet();
+//			Iterator<String> ritr = rkeys.iterator();
+//			while (ritr.hasNext())
+//			{
+//				String key = ritr.next();
+//				int count = result_count.get(key);
+//				Integer final_count = final_result_count.get(key);
+//				if (final_count == null) {
+//					final_count = count;
+//				} else {
+//					if (final_count < count)
+//					{
+//						final_count = count;
+//					}
+//				}
+//				final_result_count.put(key, final_count);
+//			}
+//		}
+//	}
+//	
+//	private static void FillResultMap(List<String> result, Map<String, Integer> result_count)
+//	{
+//		Iterator<String> ritr = result.iterator();
+//		while (ritr.hasNext())
+//		{
+//			String one = ritr.next();
+//			Integer rs = result_count.get(one);
+//			if (rs == null)
+//			{
+//				rs = 0;
+//			}
+//			rs++;
+//			result_count.put(one, rs);
+//		}
+//	}
 
 	public String Task_type() {
 		return task_type;
