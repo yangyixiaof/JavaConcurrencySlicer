@@ -18,7 +18,11 @@ public class DisplayInfoAndConsumeRvpredictResult extends DisplayInfo {
 	
 	@Override
 	public void HandleInformation(String oneline) {
-		race_list.add(oneline);
+		if (oneline.startsWith("Data race "))
+		{
+			race_list.add("");
+		}
+		race_list.set(race_list.size()-1, race_list.get(race_list.size()-1) + oneline);
 	}
 
 	public ArrayList<String> GetRaces() {
