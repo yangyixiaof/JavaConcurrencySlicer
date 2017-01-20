@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 public class DisplayInfoAndConsumeRvpredictResult extends DisplayInfo {
 	
+	private boolean handle = false;
 	private ArrayList<String> race_list = new ArrayList<String>();
 	
 	public DisplayInfoAndConsumeRvpredictResult(PrintStream out) {
@@ -21,8 +22,18 @@ public class DisplayInfoAndConsumeRvpredictResult extends DisplayInfo {
 		if (oneline.startsWith("Data race "))
 		{
 			race_list.add("");
+			handle = true;
 		}
-		race_list.set(race_list.size()-1, race_list.get(race_list.size()-1) + oneline);
+		if (oneline.startsWith("Successfully race-analysis "))
+		{
+			handle = false;
+		}
+		if (handle)
+		{
+			race_list.set(race_list.size()-1, race_list.get(race_list.size()-1) + oneline);
+		}
+		
+		// race_list.add(oneline);
 	}
 
 	public ArrayList<String> GetRaces() {
