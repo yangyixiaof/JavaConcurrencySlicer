@@ -24,7 +24,7 @@ public class DisplayInfoAndConsumeRvpredictResult extends DisplayInfo {
 			race_list.add("");
 			handle = true;
 		}
-		if (oneline.startsWith("Successfully race-analysis "))
+		if (oneline.startsWith("Successfully race-analysis in:"))
 		{
 			handle = false;
 		}
