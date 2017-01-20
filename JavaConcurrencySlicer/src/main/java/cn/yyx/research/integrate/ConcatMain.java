@@ -244,7 +244,7 @@ public class ConcatMain {
 //					+ " -Dclass_path=" + classpath_ant;
 //			cm.RunOneProcess(cmd, false, new DisplayInfo(System.out), new DisplayInfo(System.err));
 			
-			String rvpredict = System.getenv("RVPREDICT_HOME").replace('\\', '/') + "/" + "rvpredict.jar";
+			String rvpredict = System.getenv("RVPREDICT_HOME").replace('\\', '/') + "/" + "rv-predict.jar";
 			
 //			cmd = ant_cmd + " -f " + ResourceUtil.Ant_Run + " calfuzzer_run -Dtest_class=" + full_name + " -Dtask_type=" + task_type
 //					+ " -Dclass_path=" + classpath_ant;
