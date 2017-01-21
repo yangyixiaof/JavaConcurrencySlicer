@@ -11,9 +11,9 @@ public class ProcessTest {
 	public void testx1() {
 		ConcatMain cm = new ConcatMain(new String[]{"-Djava7=\"C:/Program Files/Java/jdk1.7.0_79\""});
 		String cmd = "javac -version";
-		cm.RunOneProcess(cmd, false, new DisplayInfo(System.out), new DisplayInfo(System.err));
+		cm.RunOneProcess(cmd, false, new DisplayInfo(System.out), new DisplayInfo(System.err), -1);
 		cmd = "java -version";
-		cm.RunOneProcess(cmd, false, new DisplayInfo(System.out), new DisplayInfo(System.err));
+		cm.RunOneProcess(cmd, false, new DisplayInfo(System.out), new DisplayInfo(System.err), -1);
 	}
 	
 	@Test
