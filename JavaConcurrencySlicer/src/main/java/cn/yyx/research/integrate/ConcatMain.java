@@ -117,7 +117,7 @@ public class ConcatMain {
 		return rarr;
 	}
 
-	public void RunOneProcess(String cmd, boolean use8, DisplayInfo out, DisplayInfo err) {
+	public void RunOneProcess(String cmd, boolean use8, DisplayInfo out, DisplayInfo err, int maxSeconds) {
 		try {
 			List<String> commands = new LinkedList<String>();
 			if (EnvironmentUtil.IsWindows()) {
@@ -152,9 +152,24 @@ public class ConcatMain {
 			t1.start();
 			Thread t2 = new Thread(err);
 			t2.start();
-			process.waitFor();
-			t1.join();
-			t2.join();
+			if (maxSeconds <= 0) {
+				process.waitFor();
+				t1.join();
+				t2.join();
+			} else {
+				int totalSeconds = 0;
+				while (process.isAlive() && totalSeconds < maxSeconds)
+				{
+					totalSeconds += 5;
+					try {
+						Thread.sleep(totalSeconds * 1000);
+					} catch (Exception e) {
+					}
+				}
+				process.destroyForcibly();
+				t1.join(1000);
+				t2.join(1000);
+			}
 			Thread.sleep(1000);
 			SystemStreamUtil.Flush();
 		} catch (Exception e) {
@@ -179,7 +194,7 @@ public class ConcatMain {
 		}
 		String cmd = "java -jar " + ResourceUtil.Evosuite_Master + " -Dassertions=false" + sb.toString();
 		System.out.println("Evosuite Command:" + cmd);
-		cm.RunOneProcess(cmd, true, new DisplayInfo(System.out), new DisplayInfo(System.err));
+		cm.RunOneProcess(cmd, true, new DisplayInfo(System.out), new DisplayInfo(System.err), 300);
 
 		Slicer s = new Slicer("evosuite-tests");
 		s.SliceSuffixedTestInDirectory("_ESTest", Arrays.asList(classpath.split(pathsep)));
@@ -205,7 +220,7 @@ public class ConcatMain {
 //			cm.RunOneProcess(cmd, false, new DisplayInfo(System.out), new DisplayInfo(System.err));
 			
 			cmd = "javac " + f.getAbsolutePath() + " -d classes -cp " + classpath;
-			cm.RunOneProcess(cmd, false, new DisplayInfo(System.out), new DisplayInfo(System.err));
+			cm.RunOneProcess(cmd, false, new DisplayInfo(System.out), new DisplayInfo(System.err), 300);
 			System.out.println("Successfully compile the java file:" + f.getAbsolutePath() + ".");
 		}
 		SystemStreamUtil.Flush();
@@ -255,7 +270,7 @@ public class ConcatMain {
 			DisplayInfoAndConsumeRvpredictResult out = new DisplayInfoAndConsumeRvpredictResult(System.out);
 			DisplayInfoAndConsumeRvpredictResult err = new DisplayInfoAndConsumeRvpredictResult(System.err);
 			
-			cm.RunOneProcess(cmd, false, out, err);
+			cm.RunOneProcess(cmd, false, out, err, 300);
 			
 			ArrayList<String> out_result = out.GetRaces();
 			ArrayList<String> err_result = err.GetRaces();
