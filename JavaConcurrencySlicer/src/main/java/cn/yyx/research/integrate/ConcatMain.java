@@ -8,8 +8,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
 
 import cn.yyx.research.slice.Slicer;
 import cn.yyx.research.util.CommandUtil;
@@ -182,7 +180,7 @@ public class ConcatMain {
 		
 		ConcatMain cm = new ConcatMain(args);
 		String[] ref_args = cm.GetRefinedArgs();
-		String task_type = cm.Task_type();
+		//String task_type = cm.Task_type();
 		String projectcp = CommandUtil.FindProjectClassPath(ref_args);
 		String pathsep = System.getProperty("path.separator");
 		String classpath = "." + (projectcp == null ? "" : (pathsep + projectcp)) + pathsep
@@ -226,107 +224,107 @@ public class ConcatMain {
 		SystemStreamUtil.Flush();
 		
 		// ============ start detecting bugs! ============
-		System.out.println("============ start detecting bugs! ============");
-		
-//		String ant_cmd = "ant";
-//		if (EnvironmentUtil.IsWindows())
-//		{
-//			ant_cmd = "ant.bat";
+//		System.out.println("============ start detecting bugs! ============");
+//		
+////		String ant_cmd = "ant";
+////		if (EnvironmentUtil.IsWindows())
+////		{
+////			ant_cmd = "ant.bat";
+////		}
+//		
+//		classpath += (pathsep + Compiled_Classpath); // pathsep + ResourceUtil.Calfuzzer + 
+//		// String classpath_ant = classpath.replace(';', ':');
+//		
+//		String one_class = null;
+//		Map<String, Integer> final_result_count = new TreeMap<String, Integer>();
+//		String parent_path = new File(Compiled_Classpath).getAbsolutePath().replace('\\', '/') + "/";
+//		FileIterator fi2 = new FileIterator(Compiled_Classpath, ".+(TestCase([0-9]+)\\.class)$");
+//		Iterator<File> fitr2 = fi2.EachFileIterator();
+//		while (fitr2.hasNext()) {
+//			File f = fitr2.next();
+//			String f_abosulate_path = f.getAbsolutePath().replace('\\', '/');
+//			String temp_full_name = f_abosulate_path.substring(parent_path.length());
+//			String full_name = temp_full_name.substring(0, temp_full_name.length() - ".class".length()).replace('/',
+//					'.');
+//			
+//			String temp_one_class = full_name.substring(0, full_name.lastIndexOf("_TestCase"));
+//			if (one_class != null && !one_class.equals(temp_one_class)) {
+//				PrintResultMap(final_result_count, one_class);
+//			}
+//			one_class = temp_one_class;
+//			
+////			cmd = ant_cmd + " -f " + ResourceUtil.Ant_Run + " datarace_instr -Dtest_class=" + full_name
+////					+ " -Dclass_path=" + classpath_ant;
+////			cm.RunOneProcess(cmd, false, new DisplayInfo(System.out), new DisplayInfo(System.err));
+//			
+//			String rvpredict = System.getenv("RVPREDICT_HOME").replace('\\', '/') + "/" + "rv-predict.jar";
+//			
+////			cmd = ant_cmd + " -f " + ResourceUtil.Ant_Run + " calfuzzer_run -Dtest_class=" + full_name + " -Dtask_type=" + task_type
+////					+ " -Dclass_path=" + classpath_ant;
+////			DisplayInfoAndConsumeCalfuzzerResult out = new DisplayInfoAndConsumeCalfuzzerResult(System.out);
+////			DisplayInfoAndConsumeCalfuzzerResult err = new DisplayInfoAndConsumeCalfuzzerResult(System.err);
+//			
+//			cmd = "java -jar " + rvpredict + " -cp " + classpath + " " + full_name;
+//			DisplayInfoAndConsumeRvpredictResult out = new DisplayInfoAndConsumeRvpredictResult(System.out);
+//			DisplayInfoAndConsumeRvpredictResult err = new DisplayInfoAndConsumeRvpredictResult(System.err);
+//			
+//			cm.RunOneProcess(cmd, false, out, err, 300);
+//			
+//			ArrayList<String> out_result = out.GetRaces();
+//			ArrayList<String> err_result = err.GetRaces();
+//			
+////			Map<String, Integer> result_count = new TreeMap<String, Integer>();
+////			FillResultMap(out_result, result_count);
+////			FillResultMap(err_result, result_count);
+////			FillFinalResultMap(final_result_count, result_count);
+//			
+//			List<String> test_list = new LinkedList<String>();
+//			test_list.add("============== " + "Detect race in " + full_name + " ==============");
+//			test_list.addAll(out_result);
+//			test_list.addAll(err_result);
+//			FileUtil.AppendToFile("rvpredict_result.1k", test_list);
+//			
+//			System.out.println("Successfully " + task_type + " in:" + full_name + ".");
 //		}
-		
-		classpath += (pathsep + Compiled_Classpath); // pathsep + ResourceUtil.Calfuzzer + 
-		// String classpath_ant = classpath.replace(';', ':');
-		
-		String one_class = null;
-		Map<String, Integer> final_result_count = new TreeMap<String, Integer>();
-		String parent_path = new File(Compiled_Classpath).getAbsolutePath().replace('\\', '/') + "/";
-		FileIterator fi2 = new FileIterator(Compiled_Classpath, ".+(TestCase([0-9]+)\\.class)$");
-		Iterator<File> fitr2 = fi2.EachFileIterator();
-		while (fitr2.hasNext()) {
-			File f = fitr2.next();
-			String f_abosulate_path = f.getAbsolutePath().replace('\\', '/');
-			String temp_full_name = f_abosulate_path.substring(parent_path.length());
-			String full_name = temp_full_name.substring(0, temp_full_name.length() - ".class".length()).replace('/',
-					'.');
-			
-			String temp_one_class = full_name.substring(0, full_name.lastIndexOf("_TestCase"));
-			if (one_class != null && !one_class.equals(temp_one_class)) {
-				PrintResultMap(final_result_count, one_class);
-			}
-			one_class = temp_one_class;
-			
-//			cmd = ant_cmd + " -f " + ResourceUtil.Ant_Run + " datarace_instr -Dtest_class=" + full_name
-//					+ " -Dclass_path=" + classpath_ant;
-//			cm.RunOneProcess(cmd, false, new DisplayInfo(System.out), new DisplayInfo(System.err));
-			
-			String rvpredict = System.getenv("RVPREDICT_HOME").replace('\\', '/') + "/" + "rv-predict.jar";
-			
-//			cmd = ant_cmd + " -f " + ResourceUtil.Ant_Run + " calfuzzer_run -Dtest_class=" + full_name + " -Dtask_type=" + task_type
-//					+ " -Dclass_path=" + classpath_ant;
-//			DisplayInfoAndConsumeCalfuzzerResult out = new DisplayInfoAndConsumeCalfuzzerResult(System.out);
-//			DisplayInfoAndConsumeCalfuzzerResult err = new DisplayInfoAndConsumeCalfuzzerResult(System.err);
-			
-			cmd = "java -jar " + rvpredict + " -cp " + classpath + " " + full_name;
-			DisplayInfoAndConsumeRvpredictResult out = new DisplayInfoAndConsumeRvpredictResult(System.out);
-			DisplayInfoAndConsumeRvpredictResult err = new DisplayInfoAndConsumeRvpredictResult(System.err);
-			
-			cm.RunOneProcess(cmd, false, out, err, 300);
-			
-			ArrayList<String> out_result = out.GetRaces();
-			ArrayList<String> err_result = err.GetRaces();
-			
-//			Map<String, Integer> result_count = new TreeMap<String, Integer>();
-//			FillResultMap(out_result, result_count);
-//			FillResultMap(err_result, result_count);
-//			FillFinalResultMap(final_result_count, result_count);
-			
-			List<String> test_list = new LinkedList<String>();
-			test_list.add("============== " + "Detect race in " + full_name + " ==============");
-			test_list.addAll(out_result);
-			test_list.addAll(err_result);
-			FileUtil.AppendToFile("rvpredict_result.1k", test_list);
-			
-			System.out.println("Successfully " + task_type + " in:" + full_name + ".");
-		}
-		if (!final_result_count.isEmpty())
-		{
-			if (one_class == null)
-			{
-				System.err.println("What the fuck! one_class is null and result_count is not null?");
-				System.exit(1);
-			}
-			PrintResultMap(final_result_count, one_class);
-		}
-		SystemStreamUtil.Flush();
-//		cmd = ant_cmd + " -f " + ResourceUtil.Ant_Run + " clean_here";
-//		cm.RunOneProcess(cmd, false, new DisplayInfo(System.out), new DisplayInfo(System.err));
-		if (classes.exists()) {
-			FileUtil.DeleteFolder(classes.getAbsolutePath());
-		}
+//		if (!final_result_count.isEmpty())
+//		{
+//			if (one_class == null)
+//			{
+//				System.err.println("What the fuck! one_class is null and result_count is not null?");
+//				System.exit(1);
+//			}
+//			PrintResultMap(final_result_count, one_class);
+//		}
+//		SystemStreamUtil.Flush();
+////		cmd = ant_cmd + " -f " + ResourceUtil.Ant_Run + " clean_here";
+////		cm.RunOneProcess(cmd, false, new DisplayInfo(System.out), new DisplayInfo(System.err));
+//		if (classes.exists()) {
+//			FileUtil.DeleteFolder(classes.getAbsolutePath());
+//		}
 		
 		ResourceUtil.ClearEnvironment();
 	}
 	
-	private static void PrintResultMap(Map<String, Integer> result_count, String one_class)
-	{
-		List<String> result = new LinkedList<String>();
-		result.add("============== " + "Detect race in " + one_class + " ==============");
-		Set<String> rkeys = result_count.keySet();
-		Iterator<String> ritr = rkeys.iterator();
-		while (ritr.hasNext())
-		{
-			String rkey = ritr.next();
-			int count = result_count.get(rkey);
-			for (int i=0;i<count;i++)
-			{
-				result.add(rkey);
-			}
-		}
-		result.add(System.getProperty("line.separator"));
-		FileUtil.AppendToFile("calfuzzer_result.1k", result);
-		result_count.clear();
-		result.clear();
-	}
+//	private static void PrintResultMap(Map<String, Integer> result_count, String one_class)
+//	{
+//		List<String> result = new LinkedList<String>();
+//		result.add("============== " + "Detect race in " + one_class + " ==============");
+//		Set<String> rkeys = result_count.keySet();
+//		Iterator<String> ritr = rkeys.iterator();
+//		while (ritr.hasNext())
+//		{
+//			String rkey = ritr.next();
+//			int count = result_count.get(rkey);
+//			for (int i=0;i<count;i++)
+//			{
+//				result.add(rkey);
+//			}
+//		}
+//		result.add(System.getProperty("line.separator"));
+//		FileUtil.AppendToFile("calfuzzer_result.1k", result);
+//		result_count.clear();
+//		result.clear();
+//	}
 	
 //	private static void FillFinalResultMap(Map<String, Integer> final_result_count, Map<String, Integer> result_count)
 //	{
